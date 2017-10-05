@@ -7,35 +7,35 @@ Customer can order a book through web application and get it directly from publi
 ### 2.1 Software Interfaces
 The application must be written on Java with Play Framework. It also uses SQL databases to store data permanently.
 ### 2.2 User Interfaces
-User interface mookups are placed inside [/mockups](/mockups) folder
+User interface mookups are placed inside [/mockups](/documents/mockups) folder
 
 Main Page:
 
-![Main Page](/mockups/Main%20Page.png)
+![Main Page](/documents/mockups/Main%20Page.png)
 
 About Page:
 
-![About Page](/mockups/About%20Page.png)
+![About Page](/documents/mockups/About%20Page.png)
 
 Catalog Page:
 
-![Catalog Page](/mockups/Catalog%20Page.png)
+![Catalog Page](/documents/mockups/Catalog%20Page.png)
 
 Book Page:
 
-![Book Page](/mockups/Book%20Page.png)
+![Book Page](/documents/mockups/Book%20Page.png)
 
 Chart Page:
 
-![Chart Page](/mockups/Chart%20Page.png)
+![Chart Page](/documents/mockups/Chart%20Page.png)
 
 Account Page:
 
-![Account Page](/mockups/Account%20Page.png)
+![Account Page](/documents/mockups/Account%20Page.png)
 
 Administrator Account Page:
 
-![Administrator Account Page](/mockups/Administrator%20Account%20Page.png)
+![Administrator Account Page](/documents/mockups/Administrator%20Account%20Page.png)
 ### 2.3 User Characteristics
 A typical user is a person who like reading or have to read some books. A user prefer to read printed books rather eBooks. Potential users are impatient: they want to buy books immediately after release and pay cheaper. User interests depends on publishing house products. It is assumed that the level of computer skills is sufficient to order a something in web shop.
 ### 2.4 Assumptions and Dependencies
