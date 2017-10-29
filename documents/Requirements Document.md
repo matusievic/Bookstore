@@ -37,7 +37,12 @@ Administrator Account Page:
 
 ![Administrator Account Page](/documents/mockups/Administrator%20Account%20Page.png)
 ### 2.3 User Characteristics
-A typical user is a person who like reading. A user prefer to read printed books rather eBooks. Potential users are impatient: they want to buy books immediately after release and pay cheaper. User interests are various. It is assumed that the level of computer skills is sufficient to order a something in web shop.
+There are three groups of users: unregistered user (visitors), registered user (customers), administrators.
+#### Visitors and customers
+A typical visitor (customer) is a person who like reading. A visitor (customer) prefer to read printed books rather eBooks. Visitors (customers) are impatient: they want to buy books immediately after release and pay cheaper. Visitor (customer) interests are various. It is assumed that the level of computer skills is sufficient to order a something in web shop.
+#### Administrators
+An administrator is any person which can manage bookstore website.
+
 ### 2.4 Assumptions and Dependencies
 #### Internet connection
 This bookstore requires a stable Internet connection for using.
