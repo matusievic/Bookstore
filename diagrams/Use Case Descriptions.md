@@ -141,7 +141,7 @@ In addition to Visitor use cases and some Customer use cases it also includes:
 11. If an error has occurred, go to Step 9
 - Event flow for reading
 
-.. [View catalog](#view-catalog)
+.. [View catalog](#view_catalog)
 
 - Event flow for updating
 8. Select a desired book category in the list
