@@ -54,9 +54,9 @@ In addition to Visitor use cases it also includes:
 .. [Log in](#log-in)  
 .. [View book information](#view-book-information)
 
-10. Click to chart link on the page
-11. Click Chart link on the top of the page
-12. Check a chart list
+10. Click to cart link on the page
+11. Click Cart link on the top of the page
+12. Check a cart list
 13. If it necessary, remove some book from the list by Clicking remove link
 14. If it necessary, add a new book by Step 4 repeating
 15. Click Order button
