@@ -89,5 +89,5 @@ There are three groups of users: unregistered user (visitors), registered user (
 User can use this application in any time from any place where Internet and a web browser available. Order processing time is various. It depends on administrator working time.
 #### 3.2.2 LOCALIZATION REQUIREMENTS
 The application supports only the English language. But some text (for example book titles, authors name, and book description) can be written in book language.
-### 3.2.3 BUSINESS RULES
+#### 3.2.3 BUSINESS RULES
 Customer cannot return the order.
