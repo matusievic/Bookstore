@@ -25,9 +25,9 @@ Book Page:
 
 ![Book Page](/documents/mockups/Book%20Page.png)
 
-Chart Page:
+Cart Page:
 
-![Chart Page](/documents/mockups/Chart%20Page.png)
+![Cart Page](/documents/mockups/Cart%20Page.png)
 
 Account Page:
 
@@ -36,6 +36,10 @@ Account Page:
 Administrator Account Page:
 
 ![Administrator Account Page](/documents/mockups/Administrator%20Account%20Page.png)
+
+Orders Page:
+
+![Orders Page](/documents/mockups/Orders%20Page.png)
 ### 2.3 User Characteristics
 There are three groups of users: unregistered user (visitors), registered user (customers), administrators.
 #### Visitors and customers
@@ -85,3 +89,5 @@ There are three groups of users: unregistered user (visitors), registered user (
 User can use this application in any time from any place where Internet and a web browser available. Order processing time is various. It depends on administrator working time.
 #### 3.2.2 LOCALIZATION REQUIREMENTS
 The application supports only the English language. But some text (for example book titles, authors name, and book description) can be written in book language.
+### 3.2.3 BUSINESS RULES
+Customer cannot return the order.
