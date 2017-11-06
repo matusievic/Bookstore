@@ -40,6 +40,14 @@ Administrator Account Page:
 Orders Page:
 
 ![Orders Page](/documents/mockups/Orders%20Page.png)
+
+Order Acceptance Page:
+
+![Order Acceptance Page](/documents/mockups/Order%20Acceptance%20Page.png)
+
+Shipping Details Page:
+
+[!Shipping Details Page](/documents/mockups/Shipping%20Details%20Page.png)
 ### 2.3 User Characteristics
 There are three groups of users: unregistered user (visitors), registered user (customers), administrators.
 #### Visitors and customers
