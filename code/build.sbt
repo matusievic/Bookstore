@@ -10,6 +10,4 @@ scalaVersion := "2.11.11"
 
 libraryDependencies ++= Seq( javaJdbc , cache , javaWs )
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
-
-      
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

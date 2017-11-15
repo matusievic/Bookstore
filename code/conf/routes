@@ -18,5 +18,10 @@ GET		/help						controllers.Application.help
 # About page
 GET		/about						controllers.Application.about
 
+
+# Account actions
+POST    /login                      controllers.AccountController.authenticate
+POST	/register					controllers.AccountController.register
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
