@@ -1,7 +1,9 @@
 package services.account;
 
-import entities.user.User;
+import entities.account.Account;
+import services.exception.ServiceException;
 
 public interface AccountService {
-    User authenticate(String login, String password);
+    boolean isAccountExists(String email, String password) throws ServiceException;
+    Account authenticate(String email, String password);
 }
