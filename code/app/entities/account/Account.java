@@ -1,4 +1,4 @@
-package entities.user;
+package entities.account;
 
 import io.ebean.*;
 
@@ -6,19 +6,19 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class User extends Model {
+public class Account extends Model {
     @Id
     private String email;
     private String password;
     private String name;
     private String surname;
-    private UserType type;
+    private AccountType type;
 
-    public User() {
+    public Account() {
     }
 
 
-    public static final Finder<Integer, User> find = new Finder<>(User.class);
+    public static final Finder<Integer, Account> find = new Finder<>(Account.class);
 
     public String getName() {
         return name;
@@ -52,11 +52,11 @@ public class User extends Model {
         this.password = password;
     }
 
-    public UserType getType() {
+    public AccountType getType() {
         return type;
     }
 
-    public void setType(UserType type) {
+    public void setType(AccountType type) {
         this.type = type;
     }
 }
