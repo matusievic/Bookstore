@@ -9,6 +9,7 @@ import services.account.AccountServiceFactory;
 import services.exception.ServiceException;
 import services.validator.AccountValidator;
 import views.html.login;
+import views.html.signup;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,9 @@ public class AccountController extends Controller {
 
     public Result register() {
         Form<SignupForm> signupForm = formFactory.form(SignupForm.class).bindFromRequest();
+        if (signupForm.hasErrors()) {
+            return badRequest(signup.render(signupForm));
+        }
 
         return TODO;
     }
@@ -79,6 +83,32 @@ public class AccountController extends Controller {
         public String email;
         public String firstPassword;
         public String secondPassword;
+
+
+        public String validate() {
+            if (!AccountValidator.validateName(name)) {
+                return "You've entered an incorrect name";
+            }
+            if (!AccountValidator.validateSurname(surname)) {
+                return "You've entered an incorrect surname";
+            }
+            if (!AccountValidator.validateEmail(email)) {
+                return "You've entered an incorrect email address";
+            }
+            if (!AccountValidator.validatePassword(firstPassword)) {
+                return "You've entered an incorrect password";
+            }
+            if (!firstPassword.equals(secondPassword)) {
+                return "Passwords you entered doesn't match";
+            }
+
+            if (AccountServiceFactory.getInstance().getAccountService().isAccountExists(email)) {
+                return "Please provide an another email address.\nEmail address: " + email + " is connected with an another account";
+            }
+
+            return null;
+        }
+
 
         public String getName() {
             return name;

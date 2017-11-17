@@ -7,6 +7,13 @@
       <form class="form-group">
         <h2 class="text-center">Sign Up</h2>
         <br>
+
+        @if(form.hasGlobalErrors) {
+          <p class="error">
+          @form.getGlobalError.get.message
+          </p>
+        }
+
         <label for="inputName" class="sr-only">Your name</label>
         <input type="text" name="name" id="inputName" class="form-control" placeholder="Your name" required autofocus>
         <br>
