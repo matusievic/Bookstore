@@ -1,19 +1,24 @@
 package entities.user;
 
-public class User {
-    private int id;
-    private String name;
-    private String surname;
+import io.ebean.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class User extends Model {
+    @Id
     private String email;
     private String password;
+    private String name;
+    private String surname;
     private UserType type;
 
     public User() {
     }
 
-    public int getId() {
-        return id;
-    }
+
+    public static final Finder<Integer, User> find = new Finder<>(User.class);
 
     public String getName() {
         return name;
