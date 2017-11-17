@@ -1,8 +1,8 @@
 package dao.account;
 
-import entities.user.User;
+import entities.account.Account;
 
 public interface AccountDAO {
-    User getUser(String login, String password);
-
+    boolean isAccountExists(String email, String password);
+    Account getAccount(String email, String password);
 }
