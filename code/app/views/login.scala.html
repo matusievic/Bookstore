@@ -10,6 +10,12 @@
                 <h2 class="text-center">Log In</h2>
                 <br>
 
+                @if(form.hasGlobalErrors) {
+                    <p class="error">
+                    @form.getGlobalError.get.message
+                    </p>
+                }
+
                 <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                 <br>

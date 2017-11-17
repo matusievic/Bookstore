@@ -1,10 +1,14 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
-import play.data.*;
-
-import views.html.*;
+import play.Logger;
+import play.data.Form;
+import play.data.FormFactory;
+import play.mvc.Controller;
+import play.mvc.Result;
+import services.account.AccountServiceFactory;
+import services.exception.ServiceException;
+import services.validator.AccountValidator;
+import views.html.login;
 
 import javax.inject.Inject;
 
@@ -14,6 +18,10 @@ public class AccountController extends Controller {
 
     public Result authenticate() {
     	Form<LoginForm> loginForm = formFactory.form(LoginForm.class).bindFromRequest();
+        if (loginForm.hasErrors()) {
+            return badRequest(login.render(loginForm));
+        }
+
 
     	return TODO ;
     }
@@ -28,6 +36,25 @@ public class AccountController extends Controller {
     public static class LoginForm {
         public String email;
         public String password;
+
+        public String validate() {
+            if (!AccountValidator.validateEmail(email)) {
+                return "You've entered an incorrect email address";
+            }
+            if (!AccountValidator.validatePassword(password)) {
+                return "You've entered an incorrect password";
+            }
+            try {
+                if (!AccountServiceFactory.getInstance().getAccountService().isAccountExists(email, password)) {
+                    return "You've entered an incorrect login/password combination";
+                }
+            } catch (ServiceException e) {
+                Logger.error("Cannot check if an account exists", e);
+                return "There's some temporarily errors on the server.\n Please try to log in later.";
+            }
+
+            return null;
+        }
 
         public String getEmail() {
             return email;
