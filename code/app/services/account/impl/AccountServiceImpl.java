@@ -26,8 +26,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account authenticate(String email, String password) {
-        return null;
+    public Account authenticate(String email, String password) throws ServiceException {
+        String encryptedPassword = encryptPassword(password);
+        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        return accountDAO.getAccount(email, encryptedPassword);
+    }
+
+    @Override
+    public Account register(String email, String password, String name, String surname) throws ServiceException {
+        String encryptedPassword = encryptPassword(password);
+        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+
+        return accountDAO.addAccount(email, encryptedPassword, name, surname);
     }
 
 

@@ -13,7 +13,7 @@ public class Application extends Controller {
     FormFactory formFactory;
 
     public Result index() {
-        return ok(index.render("Your new application is ready."));
+        return ok(index.render());
     }
 
     public Result catalog() {

@@ -9,8 +9,8 @@ create table account (
   name                          varchar(255),
   surname                       varchar(255),
   type                          integer,
-  constraint ck_user_type check ( type in (0,1)),
-  constraint pk_user primary key (email)
+  constraint ck_account_type check ( type in (0,1)),
+  constraint pk_account primary key (email)
 );
 
 

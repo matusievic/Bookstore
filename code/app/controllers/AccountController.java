@@ -1,13 +1,17 @@
 package controllers;
 
+import entities.account.Account;
+import entities.account.AccountType;
 import play.Logger;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
+import services.account.AccountService;
 import services.account.AccountServiceFactory;
 import services.exception.ServiceException;
 import services.validator.AccountValidator;
+import views.html.index;
 import views.html.login;
 import views.html.signup;
 
@@ -18,13 +22,25 @@ public class AccountController extends Controller {
     FormFactory formFactory;
 
     public Result authenticate() {
-    	Form<LoginForm> loginForm = formFactory.form(LoginForm.class).bindFromRequest();
+        Form<LoginForm> loginForm = formFactory.form(LoginForm.class).bindFromRequest();
         if (loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         }
+        String email = loginForm.get().email;
+        String password = loginForm.get().password;
 
+        Account account = null;
+        try {
+            account = AccountServiceFactory.getInstance().getAccountService().authenticate(email, password);
+        } catch (ServiceException e) {
+            return internalServerError(views.html.error.error500.render());
+        }
 
-    	return TODO ;
+        session().clear();
+        session("email", account.getEmail());
+        session("accountType", account.getType().toString());
+
+        return ok(index.render());
     }
 
 
@@ -33,8 +49,22 @@ public class AccountController extends Controller {
         if (signupForm.hasErrors()) {
             return badRequest(signup.render(signupForm));
         }
+        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        Account account = null;
+        try {
+            String email = signupForm.get().email;
+            String password = signupForm.get().firstPassword;
+            String name = signupForm.get().name;
+            String surname = signupForm.get().surname;
+            account = accountService.register(email, password, name, surname);
+        } catch (ServiceException e) {
+            return badRequest(views.html.error.error500.render());
+        }
 
-        return TODO;
+        session().clear();
+        session("email", signupForm.get().email);
+        session("accountType", AccountType.CUSTOMER.toString());
+        return ok(index.render());
     }
 
     public static class LoginForm {

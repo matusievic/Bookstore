@@ -11,17 +11,23 @@ import java.security.NoSuchAlgorithmException;
 public class MD5Encryptor implements Encryptor {
     @Override
     public String encrypt(String source) throws EncryptorException {
-        byte[] sourceStringBytes = null, resultStringBytes = null;
+        String result = null;
         try {
-            sourceStringBytes = source.getBytes("UTF-8");
-
             MessageDigest md = MessageDigest.getInstance("MD5");
-            resultStringBytes = md.digest(sourceStringBytes);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            md.update(source.getBytes());
+
+            byte byteData[] = md.digest();
+
+            //convert the byte to hex format
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < byteData.length; i++) {
+                sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            result = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
             Logger.error("No MD5 algorithm", e);
             throw new EncryptorException(e);
         }
-
-        return new String(resultStringBytes);
+        return result;
     }
 }

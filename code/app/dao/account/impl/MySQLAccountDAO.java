@@ -9,7 +9,7 @@ import java.util.List;
 public class MySQLAccountDAO implements AccountDAO {
     @Override
     public boolean isAccountExists(String email) {
-        Account account = Ebean.find(Account.class).select("user").where().eq("email", email).findUnique();
+        Account account = Ebean.find(Account.class).select("account").where().eq("email", email).findUnique();
         return account != null;
     }
 
@@ -25,6 +25,24 @@ public class MySQLAccountDAO implements AccountDAO {
 
     @Override
     public Account getAccount(String email, String password) {
+        List<Account> accounts = Account.find.all();
+        for (Account account : accounts) {
+            if (account.getEmail().equals(email) && account.getPassword().equals(password)) {
+                return account;
+            }
+        }
+
         return null;
+    }
+
+    @Override
+    public Account addAccount(String email, String password, String name, String surname) {
+        Account account = new Account();
+        account.setEmail(email);
+        account.setPassword(password);
+        account.setName(name);
+        account.setSurname(surname);
+        account.save();
+        return account;
     }
 }
