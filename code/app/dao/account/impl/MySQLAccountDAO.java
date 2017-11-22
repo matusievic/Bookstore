@@ -17,7 +17,7 @@ public class MySQLAccountDAO implements AccountDAO {
     public boolean isAccountExists(String email, String password) {
         List<Account> accounts = Account.find.all();
         for (Account account : accounts) {
-            if (account.getEmail().equals(email)) { return true; }
+            if (account.getEmail().equals(email) && account.getPassword().equals(password)) { return true; }
         }
 
         return false;

@@ -38,6 +38,7 @@ public class AccountController extends Controller {
 
         session().clear();
         session("email", account.getEmail());
+        session("password", account.getPassword());
         session("accountType", account.getType().toString());
 
         return ok(index.render());
@@ -64,6 +65,11 @@ public class AccountController extends Controller {
         session().clear();
         session("email", signupForm.get().email);
         session("accountType", AccountType.CUSTOMER.toString());
+        return ok(index.render());
+    }
+
+    public Result logOut() {
+        session().clear();
         return ok(index.render());
     }
 
@@ -163,6 +169,39 @@ public class AccountController extends Controller {
         public void setEmail(String email) {
             this.email = email;
         }
+
+        public String getFirstPassword() {
+            return firstPassword;
+        }
+
+        public void setFirstPassword(String firstPassword) {
+            this.firstPassword = firstPassword;
+        }
+
+        public String getSecondPassword() {
+            return secondPassword;
+        }
+
+        public void setSecondPassword(String secondPassword) {
+            this.secondPassword = secondPassword;
+        }
+    }
+
+    public static class EmailForm {
+        private String email;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+    }
+
+    public static class PasswordFrom {
+        private String firstPassword;
+        private String secondPassword;
 
         public String getFirstPassword() {
             return firstPassword;

@@ -41,6 +41,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
+    @Override
+    public Account getAccountInfo(String email, String password) {
+        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        return accountDAO.getAccount(email, password);
+    }
+
     private String encryptPassword(String password) throws ServiceException {
         String encryptedPassword = null;
         Encryptor encryptor = EncryptionServiceFactory.getInstance().getEncryptor();

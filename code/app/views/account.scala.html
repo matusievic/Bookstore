@@ -1,0 +1,15 @@
+@import entities.account.Account
+@(account: Account)
+
+@main("Account - Bookstore") {
+    <div class="row">
+        <div class="col-md-12">
+            <h1>@account.getName @account.getSurname</h1>
+
+            <h2>Settings:</h2>
+            <h3>Email:</h3>
+            <h3>Password:</h3>
+            <button type="button" class="btn btn-danger">Deactivate account</button>
+        </div>
+    </div>
+}

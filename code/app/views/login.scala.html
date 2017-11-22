@@ -1,33 +1,30 @@
 @(form: play.data.Form[AccountController.LoginForm])
 
+@main("Log In - Bookstore") {
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+        @helper.form(action = routes.AccountController.authenticate) {
+            <form class="form-group">
+                <h2 class="text-center">Log In</h2>
+                <br>
+                @if(form.hasGlobalErrors) {
+                    <p class="error">
+                    @form.getGlobalError.get.message
+                    </p>
+                }
 
-    @main("Log In - Bookstore") {
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-            @helper.form(action = routes.AccountController.authenticate) {
-                <form class="form-group">
+                <label for="inputEmail" class="sr-only">Email address</label>
+                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <br>
 
-                    <h2 class="text-center">Log In</h2>
-                    <br>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <br>
 
-                    @if(form.hasGlobalErrors) {
-                        <p class="error">
-                        @form.getGlobalError.get.message
-                        </p>
-                    }
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
 
-                    <label for="inputEmail" class="sr-only">Email address</label>
-                    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                    <br>
-
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                    <br>
-
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-
-                </form>
-            }
-            </div>
+            </form>
+        }
         </div>
-    }
+    </div>
+}

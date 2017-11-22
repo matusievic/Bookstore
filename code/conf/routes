@@ -13,6 +13,10 @@ GET		/signup						controllers.Application.signUp
 
 # Catalog page
 GET		/catalog					controllers.Application.catalog
+# Orsers page
+GET		/orders					    controllers.Application.orders
+# Users page
+GET		/users  					controllers.Application.users
 # Help page
 GET		/help						controllers.Application.help
 # About page
@@ -22,6 +26,9 @@ GET		/about						controllers.Application.about
 # Account actions
 POST    /login                      controllers.AccountController.authenticate
 POST	/register					controllers.AccountController.register
+GET     /logout                     controllers.AccountController.logOut
+# Account page
+GET     /account                    controllers.Application.account
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

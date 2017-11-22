@@ -9,4 +9,6 @@ public interface AccountService {
 
     Account authenticate(String email, String password) throws ServiceException;
     Account register(String email, String password, String name, String surname) throws ServiceException;
+
+    Account getAccountInfo(String email, String password);
 }

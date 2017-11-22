@@ -1,4 +1,6 @@
+@import entities.account.AccountType
 @()
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -14,12 +16,20 @@
                 <li><a href="@routes.Application.index">Home</a></li>
                 <li><a href="@routes.Application.catalog">Catalog</a></li>
                 <li><a href="@routes.Application.help">Help</a></li>
+                @if(session.containsKey("email") && session.get("accountType") == AccountType.ADMIN.toString) {
+                    <li><a href="@routes.Application.orders">Orders</a></li>
+                    <li><a href="@routes.Application.users">Users</a></li>
+                }
                 <li><a href="@routes.Application.about">About</a></li>
-                @(if())
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="@routes.Application.logIn">Log in</a></li>
-                <li><a href="@routes.Application.signUp">Sign up</a></li>
+                @if(!session.containsKey("email")) {
+                    <li><a href="@routes.Application.logIn">Log in</a></li>
+                    <li><a href="@routes.Application.signUp">Sign up</a></li>
+                } else {
+                    <li><a href="@routes.Application.account">Account</a></li>
+                    <li><a href="@routes.AccountController.logOut">Log out</a></li>
+                }
             </ul>
         </div>
     </div>
