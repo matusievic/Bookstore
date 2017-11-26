@@ -73,6 +73,19 @@ public class AccountController extends Controller {
         return ok(index.render());
     }
 
+
+    public Result changeEmail() {
+        return TODO;
+    }
+
+    public Result changePassword() {
+        return TODO;
+    }
+
+    public Result deactivate() {
+        return TODO;
+    }
+
     public static class LoginForm {
         public String email;
         public String password;
@@ -199,7 +212,7 @@ public class AccountController extends Controller {
         }
     }
 
-    public static class PasswordFrom {
+    public static class PasswordForm {
         private String firstPassword;
         private String secondPassword;
 

@@ -27,6 +27,9 @@ GET		/about						controllers.Application.about
 POST    /login                      controllers.AccountController.authenticate
 POST	/register					controllers.AccountController.register
 GET     /logout                     controllers.AccountController.logOut
+POST	/changeEmail                controllers.AccountController.changeEmail
+POST	/changePassword				controllers.AccountController.changePassword
+GET     /deactivate                 controllers.AccountController.deactivate
 # Account page
 GET     /account                    controllers.Application.account
 

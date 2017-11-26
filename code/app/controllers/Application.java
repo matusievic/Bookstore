@@ -42,11 +42,16 @@ public class Application extends Controller {
         if (!session().containsKey("email")) {
             return ok(index.render());
         }
+
         AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
         String email = session("email");
         String password = session("password");
         Account currentAccount = accountService.getAccountInfo(email, password);
-        return ok(account.render(currentAccount));
+        
+        Form<AccountController.EmailForm> emailForm = formFactory.form(AccountController.EmailForm.class);
+        Form<AccountController.PasswordForm> passwordForm = formFactory.form(AccountController.PasswordForm.class);
+
+        return ok(account.render(currentAccount, emailForm, passwordForm));
     }
 
 

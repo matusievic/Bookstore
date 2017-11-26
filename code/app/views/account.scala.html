@@ -1,15 +1,60 @@
 @import entities.account.Account
-@(account: Account)
+@import entities.account.AccountType
+
+@(account: Account, emailForm: play.data.Form[AccountController.EmailForm], passwordForm: play.data.Form[AccountController.PasswordForm])
 
 @main("Account - Bookstore") {
-    <div class="row">
-        <div class="col-md-12">
-            <h1>@account.getName @account.getSurname</h1>
+	<div class="container">
+	    <div class="row">
+	        <div class="col-md-10">
+	            <h1>@account.getName @account.getSurname</h1>
+	            <h2>Settings:</h2>
 
-            <h2>Settings:</h2>
-            <h3>Email:</h3>
-            <h3>Password:</h3>
-            <button type="button" class="btn btn-danger">Deactivate account</button>
-        </div>
-    </div>
+	            @helper.form(action = routes.AccountController.changeEmail) {
+		            <form class="form-group">
+	            	<h3>Email:</h3>
+		                <br>
+
+		                @if(emailForm.hasGlobalErrors) {
+		                    <p class="error">
+		                    @emailForm.getGlobalError.get.message
+		                    </p>
+		                }
+
+		                <label for="inputEmail" class="sr-only">Email address</label>
+		                <input type="email" name="email" id="inputEmail" class="form-control" value="@account.getEmail" placeholder="Email address" required autofocus>
+		                <br>
+
+		                <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
+		            </form>
+        		}
+
+        		@helper.form(action = routes.AccountController.changePassword) {
+		            <form class="form-group">
+		            	<h3>Password:</h3>
+		                <br>
+
+		                @if(passwordForm.hasGlobalErrors) {
+		                    <p class="error">
+		                    @passwordForm.getGlobalError.get.message
+		                    </p>
+		                }
+
+		                <label for="inputEmail" class="sr-only">New Passrowd:</label>
+		                <input type="email" name="firstPassword" id="inputEmail" class="form-control" placeholder="New password" required>
+		                <br>
+
+		                <label for="inputEmail" class="sr-only">Repeat new Passrowd:</label>
+		                <input type="email" name="secondPassword" id="inputEmail" class="form-control" placeholder="New password" required>
+		                <br>
+
+		                <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
+		            </form>
+        		}
+        		@if(session.get("accountType") != AccountType.ADMIN.toString) {
+	            	<a href="@routes.AccountController.deactivate">type="button" class="btn btn-danger">Deactivate account</a>
+	        	}
+	        </div>
+	    </div>
+	</div>
 }
