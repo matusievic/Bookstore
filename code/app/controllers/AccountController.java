@@ -9,11 +9,12 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.account.AccountService;
 import services.account.AccountServiceFactory;
+import services.encryption.EncryptionServiceFactory;
+import services.encryption.Encryptor;
+import services.exception.EncryptorException;
 import services.exception.ServiceException;
 import services.validator.AccountValidator;
-import views.html.index;
-import views.html.login;
-import views.html.signup;
+import views.html.*;
 
 import javax.inject.Inject;
 
@@ -57,14 +58,15 @@ public class AccountController extends Controller {
             String password = signupForm.get().firstPassword;
             String name = signupForm.get().name;
             String surname = signupForm.get().surname;
-            account = accountService.register(email, password, name, surname);
+            account = accountService.register(email, password, name, surname, AccountType.CUSTOMER);
         } catch (ServiceException e) {
             return badRequest(views.html.error.error500.render());
         }
 
         session().clear();
-        session("email", signupForm.get().email);
-        session("accountType", AccountType.CUSTOMER.toString());
+        session("email", account.getEmail());
+        session("password", account.getPassword());
+        session("accountType", account.getType().toString());
         return ok(index.render());
     }
 
@@ -73,17 +75,63 @@ public class AccountController extends Controller {
         return ok(index.render());
     }
 
+    public Result changeName() {
+        Form<NameForm> nameForm = formFactory.form(NameForm.class).bindFromRequest();
+        Form<PasswordForm> passwordForm = formFactory.form(PasswordForm.class);
 
-    public Result changeEmail() {
-        return TODO;
+        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        String email = session("email");
+        String password = session("password");
+        Account currentAccount = accountService.getAccountInfo(email, password);
+
+        if (nameForm.hasErrors()) {
+            return badRequest(account.render(currentAccount, nameForm, passwordForm));
+        }
+
+        String newName = nameForm.get().name;
+        String newSurname = nameForm.get().surname;
+        currentAccount  = accountService.changeName(email, password, newName, newSurname);
+
+        return ok(account.render(currentAccount, nameForm, passwordForm));
     }
 
     public Result changePassword() {
-        return TODO;
+        Form<NameForm> nameForm = formFactory.form(NameForm.class);
+        Form<PasswordForm> passwordForm = formFactory.form(PasswordForm.class).bindFromRequest();
+
+        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        String email = session("email");
+        String password = session("password");
+        Account currentAccount = accountService.getAccountInfo(email, password);
+
+        if (passwordForm.hasErrors()) {
+            return badRequest(account.render(currentAccount, nameForm, passwordForm));
+        }
+
+        String newPassword = passwordForm.get().firstPassword;
+        try {
+            accountService.changePassword(email, password, newPassword);
+        } catch (ServiceException e) {
+            return internalServerError(views.html.error.error500.render());
+        }
+
+        session("password", currentAccount.getPassword());
+
+        return ok(account.render(currentAccount, nameForm, passwordForm));
     }
 
     public Result deactivate() {
-        return TODO;
+        if (session("email") == null) {
+            ok(index.render());
+        }
+
+        String email = session("email");
+        String password = session("password");
+        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        accountService.deactivate(email, password);
+
+        session().clear();
+        return ok(index.render());
     }
 
     public static class LoginForm {
@@ -200,21 +248,33 @@ public class AccountController extends Controller {
         }
     }
 
-    public static class EmailForm {
-        private String email;
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-    }
-
     public static class PasswordForm {
         private String firstPassword;
         private String secondPassword;
+        private String currentPassword;
+
+        public String validate() {
+            if (!AccountValidator.validatePassword(firstPassword)) {
+                return "You've entered an incorrect password";
+            }
+
+            if (!firstPassword.equals(secondPassword)) {
+                return "Passwords you entered doesn't match";
+            }
+            Encryptor encryptor = EncryptionServiceFactory.getInstance().getEncryptor();
+            String encryptedPassword = null;
+            try {
+                encryptedPassword = encryptor.encrypt(currentPassword);
+            } catch (EncryptorException e) {
+                return "An server error has occured.\nPlease try again later";
+            }
+
+            if (!encryptedPassword.equals(session("password"))) {
+                return "Please enter a correct current password";
+            }
+
+            return null;
+        }
 
         public String getFirstPassword() {
             return firstPassword;
@@ -230,6 +290,47 @@ public class AccountController extends Controller {
 
         public void setSecondPassword(String secondPassword) {
             this.secondPassword = secondPassword;
+        }
+
+        public String getCurrentPassword() {
+            return currentPassword;
+        }
+
+        public void setCurrentPassword(String currentPassword) {
+            this.currentPassword = currentPassword;
+        }
+    }
+
+    public static class NameForm {
+        private String name;
+        private String surname;
+
+        public String validate() {
+            if (!AccountValidator.validateName(name)) {
+                return "You've entered an incorrect name";
+            }
+
+            if (!AccountValidator.validateSurname(surname)) {
+                return "You've entered an incorrect surname";
+            }
+
+            return null;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getSurname() {
+            return surname;
+        }
+
+        public void setSurname(String surname) {
+            this.surname = surname;
         }
     }
 }

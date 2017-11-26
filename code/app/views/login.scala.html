@@ -3,7 +3,7 @@
 @main("Log In - Bookstore") {
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-        @helper.form(action = routes.AccountController.authenticate) {
+        @helper.form(action = helper.CSRF(routes.AccountController.authenticate)) {
             <form class="form-group">
                 <h2 class="text-center">Log In</h2>
                 <br>

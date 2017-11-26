@@ -3,6 +3,7 @@ package services.account.impl;
 import dao.AccountDAOFactory;
 import dao.account.AccountDAO;
 import entities.account.Account;
+import entities.account.AccountType;
 import play.Logger;
 import services.account.AccountService;
 import services.encryption.EncryptionServiceFactory;
@@ -33,11 +34,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account register(String email, String password, String name, String surname) throws ServiceException {
+    public Account register(String email, String password, String name, String surname, AccountType type) throws ServiceException {
         String encryptedPassword = encryptPassword(password);
         AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
 
-        return accountDAO.addAccount(email, encryptedPassword, name, surname);
+        return accountDAO.addAccount(email, encryptedPassword, name, surname, type);
     }
 
 
@@ -45,6 +46,38 @@ public class AccountServiceImpl implements AccountService {
     public Account getAccountInfo(String email, String password) {
         AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
         return accountDAO.getAccount(email, password);
+    }
+
+    @Override
+    public Account changeName(String email, String password, String newName, String newSurname) {
+        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        Account account = accountDAO.getAccount(email, password);
+        account.setName(newName);
+        account.setSurname(newSurname);
+        return accountDAO.updateAccount(account);
+    }
+
+    @Override
+    public Account changePassword(String email, String oldPassword, String newPassword) throws ServiceException {
+        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        Account account = accountDAO.getAccount(email, oldPassword);
+        String newEncryptedPassword = encryptPassword(newPassword);
+        account.setPassword(newEncryptedPassword);
+        return accountDAO.updateAccount(account);
+    }
+
+
+    @Override
+    public void deactivate(String email, String password) {
+        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        Account account = accountDAO.getAccount(email, password);
+        if (account != null) {
+            account.setEmail(account.getEmail() + "_deactivated");
+            account.setPassword("");
+            account.setName(account.getName() + "_deactivated");
+            account.setSurname(account.getSurname() + "_deactivated");
+        }
+        accountDAO.updateAccount(account);
     }
 
     private String encryptPassword(String password) throws ServiceException {

@@ -48,10 +48,10 @@ public class Application extends Controller {
         String password = session("password");
         Account currentAccount = accountService.getAccountInfo(email, password);
         
-        Form<AccountController.EmailForm> emailForm = formFactory.form(AccountController.EmailForm.class);
+        Form<AccountController.NameForm> nameForm = formFactory.form(AccountController.NameForm.class);
         Form<AccountController.PasswordForm> passwordForm = formFactory.form(AccountController.PasswordForm.class);
 
-        return ok(account.render(currentAccount, emailForm, passwordForm));
+        return ok(account.render(currentAccount, nameForm, passwordForm));
     }
 
 

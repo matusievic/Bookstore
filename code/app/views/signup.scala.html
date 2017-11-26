@@ -3,7 +3,7 @@
 @main("Sign Up - Bookstore") {
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-        @helper.form(action = routes.AccountController.register) {
+        @helper.form(action = helper.CSRF(routes.AccountController.register)) {
             <form class="form-group">
 
                 <h2 class="text-center">Sign Up</h2>

@@ -2,15 +2,18 @@ package dao.account.impl;
 
 import dao.account.AccountDAO;
 import entities.account.Account;
-import io.ebean.Ebean;
+import entities.account.AccountType;
 
 import java.util.List;
 
 public class MySQLAccountDAO implements AccountDAO {
     @Override
     public boolean isAccountExists(String email) {
-        Account account = Ebean.find(Account.class).select("account").where().eq("email", email).findUnique();
-        return account != null;
+        List<Account> accounts= Account.find.all();
+        for (Account account : accounts) {
+            if (account.getEmail().equals(email)) { return true; }
+        }
+        return false;
     }
 
     @Override
@@ -36,12 +39,19 @@ public class MySQLAccountDAO implements AccountDAO {
     }
 
     @Override
-    public Account addAccount(String email, String password, String name, String surname) {
+    public Account updateAccount(Account account) {
+        account.update();
+        return account;
+    }
+
+    @Override
+    public Account addAccount(String email, String password, String name, String surname, AccountType type) {
         Account account = new Account();
         account.setEmail(email);
         account.setPassword(password);
         account.setName(name);
         account.setSurname(surname);
+        account.setType(type);
         account.save();
         return account;
     }

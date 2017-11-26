@@ -3,7 +3,7 @@ package services.validator;
 public final class AccountValidator {
     private static String nameRegex = "[A-Z][a-z]+";
     private static String surnameRegex = "[A-Z][a-z]+";
-    private static String emailRegex = "\\w+@\\w+.[a-z]+";
+    private static String emailRegex = "[\\w._-]+@\\w+.[a-z]+";
     private static String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
 
     public static boolean validateName(String name) {

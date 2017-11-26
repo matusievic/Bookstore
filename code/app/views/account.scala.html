@@ -1,7 +1,7 @@
 @import entities.account.Account
 @import entities.account.AccountType
 
-@(account: Account, emailForm: play.data.Form[AccountController.EmailForm], passwordForm: play.data.Form[AccountController.PasswordForm])
+@(account: Account, nameForm: play.data.Form[AccountController.NameForm], passwordForm: play.data.Form[AccountController.PasswordForm])
 
 @main("Account - Bookstore") {
 	<div class="container">
@@ -10,26 +10,29 @@
 	            <h1>@account.getName @account.getSurname</h1>
 	            <h2>Settings:</h2>
 
-	            @helper.form(action = routes.AccountController.changeEmail) {
+	            @helper.form(action = helper.CSRF(routes.AccountController.changeName)) {
 		            <form class="form-group">
-	            	<h3>Email:</h3>
+	            	<h3>Personal information:</h3>
 		                <br>
 
-		                @if(emailForm.hasGlobalErrors) {
+		                @if(nameForm.hasGlobalErrors) {
 		                    <p class="error">
-		                    @emailForm.getGlobalError.get.message
+		                    @nameForm.getGlobalError.get.message
 		                    </p>
 		                }
 
-		                <label for="inputEmail" class="sr-only">Email address</label>
-		                <input type="email" name="email" id="inputEmail" class="form-control" value="@account.getEmail" placeholder="Email address" required autofocus>
+		                <label for="inputName" class="sr-only">Your name</label>
+		                <input type="text" name="name" id="inputName" class="form-control" value="@account.getName" placeholder="Your name" required autofocus>
+						<br>
+
+						<label for="inputSurname" class="sr-only">Email address</label>
+						<input type="text" name="surname" id="inputSurname" class="form-control" value="@account.getSurname" placeholder="Your surname" required autofocus>
 		                <br>
 
 		                <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
 		            </form>
-        		}
-
-        		@helper.form(action = routes.AccountController.changePassword) {
+						}
+        		@helper.form(action = helper.CSRF(routes.AccountController.changePassword)) {
 		            <form class="form-group">
 		            	<h3>Password:</h3>
 		                <br>
@@ -40,19 +43,23 @@
 		                    </p>
 		                }
 
-		                <label for="inputEmail" class="sr-only">New Passrowd:</label>
-		                <input type="email" name="firstPassword" id="inputEmail" class="form-control" placeholder="New password" required>
+		                <label for="inputFirstPassword" class="sr-only">New password:</label>
+		                <input type="password" name="firstPassword" id="inputFirstPassword" class="form-control" placeholder="New password" required>
 		                <br>
 
-		                <label for="inputEmail" class="sr-only">Repeat new Passrowd:</label>
-		                <input type="email" name="secondPassword" id="inputEmail" class="form-control" placeholder="New password" required>
-		                <br>
+						<label for="inputSecondPassword" class="sr-only">Repeat new password:</label>
+						<input type="password" name="secondPassword" id="inputSecondPassword" class="form-control" placeholder="Repeat new password" required>
+						<br>
+
+						<label for="inputCurrentPassword" class="sr-only">Your current password:</label>
+						<input type="password" name="currentPassword" id="inputCurrentPassword" class="form-control" placeholder="Your current password" required>
+						<br>
 
 		                <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
 		            </form>
         		}
         		@if(session.get("accountType") != AccountType.ADMIN.toString) {
-	            	<a href="@routes.AccountController.deactivate">type="button" class="btn btn-danger">Deactivate account</a>
+	            	<a href="@routes.AccountController.deactivate" class="btn btn-danger">Deactivate account</a>
 	        	}
 	        </div>
 	    </div>
