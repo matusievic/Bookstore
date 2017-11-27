@@ -13,8 +13,26 @@ create table account (
   constraint pk_account primary key (email)
 );
 
+create table author (
+  id                            integer auto_increment not null,
+  name                          varchar(255),
+  surname                       varchar(255),
+  description                   varchar(255),
+  constraint pk_author primary key (id)
+);
+
+create table category (
+  id                            integer auto_increment not null,
+  name                          varchar(255),
+  constraint pk_category primary key (id)
+);
+
 
 # --- !Downs
 
 drop table if exists account;
+
+drop table if exists author;
+
+drop table if exists category;
 

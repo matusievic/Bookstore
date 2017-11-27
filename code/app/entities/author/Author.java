@@ -1,15 +1,20 @@
 package entities.author;
 
+import io.ebean.Finder;
+import io.ebean.Model;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Author {
+public class Author extends Model {
     @Id
     private int id;
     private String name;
     private String surname;
     private String description;
+
+    public static final Finder<Integer, Author> find = new Finder<>(Author.class);
 
     public Author() {
     }
@@ -17,7 +22,6 @@ public class Author {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -25,7 +29,6 @@ public class Author {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -33,7 +36,6 @@ public class Author {
     public String getSurname() {
         return surname;
     }
-
     public void setSurname(String surname) {
         this.surname = surname;
     }
@@ -41,7 +43,6 @@ public class Author {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -58,7 +59,6 @@ public class Author {
         if (surname != null ? !surname.equals(author.surname) : author.surname != null) return false;
         return description != null ? description.equals(author.description) : author.description == null;
     }
-
     @Override
     public int hashCode() {
         int result = id;

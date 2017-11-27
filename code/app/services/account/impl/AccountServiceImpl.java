@@ -1,6 +1,6 @@
 package services.account.impl;
 
-import dao.AccountDAOFactory;
+import dao.DAOFactory;
 import dao.account.AccountDAO;
 import entities.account.Account;
 import entities.account.AccountType;
@@ -14,7 +14,7 @@ import services.exception.ServiceException;
 public class AccountServiceImpl implements AccountService {
     @Override
     public boolean isAccountExists(String email) {
-        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         return accountDAO.isAccountExists(email);
     }
 
@@ -22,21 +22,21 @@ public class AccountServiceImpl implements AccountService {
     public boolean isAccountExists(String email, String password) throws ServiceException {
         String encryptedPassword = encryptPassword(password);
 
-        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         return accountDAO.isAccountExists(email, encryptedPassword);
     }
 
     @Override
     public Account authenticate(String email, String password) throws ServiceException {
         String encryptedPassword = encryptPassword(password);
-        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         return accountDAO.getAccount(email, encryptedPassword);
     }
 
     @Override
     public Account register(String email, String password, String name, String surname, AccountType type) throws ServiceException {
         String encryptedPassword = encryptPassword(password);
-        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
 
         return accountDAO.addAccount(email, encryptedPassword, name, surname, type);
     }
@@ -44,13 +44,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccountInfo(String email, String password) {
-        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         return accountDAO.getAccount(email, password);
     }
 
     @Override
     public Account changeName(String email, String password, String newName, String newSurname) {
-        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         Account account = accountDAO.getAccount(email, password);
         account.setName(newName);
         account.setSurname(newSurname);
@@ -59,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account changePassword(String email, String oldPassword, String newPassword) throws ServiceException {
-        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         Account account = accountDAO.getAccount(email, oldPassword);
         String newEncryptedPassword = encryptPassword(newPassword);
         account.setPassword(newEncryptedPassword);
@@ -69,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deactivate(String email, String password) {
-        AccountDAO accountDAO = AccountDAOFactory.getInstance().getAccountDAO();
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         Account account = accountDAO.getAccount(email, password);
         if (account != null) {
             account.setEmail(account.getEmail() + "_deactivated");

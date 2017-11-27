@@ -5,7 +5,7 @@ import play.mvc.*;
 import play.data.*;
 
 import services.account.AccountService;
-import services.account.AccountServiceFactory;
+import services.ServiceFactory;
 import views.html.*;
 
 import javax.inject.Inject;
@@ -43,7 +43,7 @@ public class Application extends Controller {
             return ok(index.render());
         }
 
-        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        AccountService accountService = ServiceFactory.getInstance().getAccountService();
         String email = session("email");
         String password = session("password");
         Account currentAccount = accountService.getAccountInfo(email, password);

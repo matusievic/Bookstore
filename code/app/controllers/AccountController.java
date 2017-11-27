@@ -8,7 +8,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.account.AccountService;
-import services.account.AccountServiceFactory;
+import services.ServiceFactory;
 import services.encryption.EncryptionServiceFactory;
 import services.encryption.Encryptor;
 import services.exception.EncryptorException;
@@ -32,7 +32,7 @@ public class AccountController extends Controller {
 
         Account account = null;
         try {
-            account = AccountServiceFactory.getInstance().getAccountService().authenticate(email, password);
+            account = ServiceFactory.getInstance().getAccountService().authenticate(email, password);
         } catch (ServiceException e) {
             return internalServerError(views.html.error.error500.render());
         }
@@ -51,7 +51,7 @@ public class AccountController extends Controller {
         if (signupForm.hasErrors()) {
             return badRequest(signup.render(signupForm));
         }
-        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        AccountService accountService = ServiceFactory.getInstance().getAccountService();
         Account account = null;
         try {
             String email = signupForm.get().email;
@@ -79,7 +79,7 @@ public class AccountController extends Controller {
         Form<NameForm> nameForm = formFactory.form(NameForm.class).bindFromRequest();
         Form<PasswordForm> passwordForm = formFactory.form(PasswordForm.class);
 
-        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        AccountService accountService = ServiceFactory.getInstance().getAccountService();
         String email = session("email");
         String password = session("password");
         Account currentAccount = accountService.getAccountInfo(email, password);
@@ -99,7 +99,7 @@ public class AccountController extends Controller {
         Form<NameForm> nameForm = formFactory.form(NameForm.class);
         Form<PasswordForm> passwordForm = formFactory.form(PasswordForm.class).bindFromRequest();
 
-        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        AccountService accountService = ServiceFactory.getInstance().getAccountService();
         String email = session("email");
         String password = session("password");
         Account currentAccount = accountService.getAccountInfo(email, password);
@@ -127,7 +127,7 @@ public class AccountController extends Controller {
 
         String email = session("email");
         String password = session("password");
-        AccountService accountService = AccountServiceFactory.getInstance().getAccountService();
+        AccountService accountService = ServiceFactory.getInstance().getAccountService();
         accountService.deactivate(email, password);
 
         session().clear();
@@ -146,7 +146,7 @@ public class AccountController extends Controller {
                 return "You've entered an incorrect password";
             }
             try {
-                if (!AccountServiceFactory.getInstance().getAccountService().isAccountExists(email, password)) {
+                if (!ServiceFactory.getInstance().getAccountService().isAccountExists(email, password)) {
                     return "You've entered an incorrect login/password combination";
                 }
             } catch (ServiceException e) {
@@ -199,7 +199,7 @@ public class AccountController extends Controller {
                 return "Passwords you entered doesn't match";
             }
 
-            if (AccountServiceFactory.getInstance().getAccountService().isAccountExists(email)) {
+            if (ServiceFactory.getInstance().getAccountService().isAccountExists(email)) {
                 return "Please provide an another email address.\nEmail address: " + email + " is connected with an another account";
             }
 
