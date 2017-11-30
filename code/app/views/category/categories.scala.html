@@ -1,0 +1,14 @@
+@import entities.category.Category
+
+@(categories: List[Category])
+
+@main("Categories - Bookstore") {
+    @for(c <- categories) {
+        <h2>@c.getName</h2>
+        <a href="@routes.CategoryController.edit(c.getId)">edit</a>
+        <a href="@routes.CategoryController.delete(c.getId)">delete</a>
+        <br>
+    }
+
+    <a href="@routes.CategoryController.create">create</a>
+}

@@ -3,36 +3,45 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET         /                           controllers.Application.index
 
 # Log in page
-GET		/login						controllers.Application.logIn
+GET         /login                      controllers.Application.logIn
 
 # Log in page
-GET		/signup						controllers.Application.signUp
+GET         /signup                     controllers.Application.signUp
 
 # Catalog page
-GET		/catalog					controllers.Application.catalog
+GET         /catalog                    controllers.Application.catalog
 # Orsers page
-GET		/orders					    controllers.Application.orders
+GET         /orders                     controllers.Application.orders
 # Users page
-GET		/users  					controllers.Application.users
+GET         /users                      controllers.Application.users
 # Help page
-GET		/help						controllers.Application.help
+GET         /help                       controllers.Application.help
 # About page
-GET		/about						controllers.Application.about
+GET         /about                      controllers.Application.about
 
 
 # Account actions
 + nocsrf 
-POST    /login                      controllers.AccountController.authenticate
-POST	/register					controllers.AccountController.register
-GET     /logout                     controllers.AccountController.logOut
-POST	/changeName                 controllers.AccountController.changeName
-POST	/changePassword				controllers.AccountController.changePassword
-GET     /deactivate                 controllers.AccountController.deactivate
+POST        /login                      controllers.AccountController.authenticate
+POST        /register                   controllers.AccountController.register
+GET         /logout                     controllers.AccountController.logOut
+POST        /changeName                 controllers.AccountController.changeName
+POST        /changePassword             controllers.AccountController.changePassword
+GET         /deactivate                 controllers.AccountController.deactivate
 # Account page
-GET     /account                    controllers.Application.account
+GET         /account                    controllers.Application.account
+
+
+# Category actions
+GET         /category/all               controllers.CategoryController.categories
+GET         /category/edit/:id          controllers.CategoryController.edit(id: Int)
+POST        /category/update/:id        controllers.CategoryController.update(id: Int)
+GET         /category/delete/:id        controllers.CategoryController.delete(id: Int)
+POST        /category/save              controllers.CategoryController.save
+GET         /category/create            controllers.CategoryController.create
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file               controllers.Assets.at(path="/public", file)

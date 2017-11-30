@@ -1,0 +1,20 @@
+@import entities.category.Category;
+@import entities.author.Author;
+@import entities.book.Book;
+
+@(categoryList: List[Category], authorList: List[Author], bookList: List[Book])
+
+
+@main("Calatog - Bookstore") {
+	<div class="row">
+		<div class="col-md-4">
+		@for(c <- categoryList) {
+			<ul class="nav nav-pills nav-stacked">@c.getName</ul>
+		}
+			<a href="@routes.CategoryController.categories">Edit categories</a>
+		@for(a <- authorList) {
+			<ul class="nav nav-pills nav-stacked">@{a.getName + " " + a.getSurname}</ul>
+		}
+		</div>
+	</div>
+}

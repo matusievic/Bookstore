@@ -4,6 +4,7 @@ import dao.author.AuthorDAO;
 import entities.author.Author;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 public class MySQLAuthorDAO implements AuthorDAO {
@@ -13,7 +14,7 @@ public class MySQLAuthorDAO implements AuthorDAO {
 
         int maxId = 0;
         if (maxIdAuthor.isPresent()) {
-            maxId = maxIdAuthor.get().getId();
+            maxId = maxIdAuthor.get().getId() + 1;
         }
 
         Author author = new Author();
@@ -29,10 +30,7 @@ public class MySQLAuthorDAO implements AuthorDAO {
     @Override
     public Author readAuthor(String name, String surname) {
         Optional<Author> result = Author.find.all().stream().filter(a -> a.getName().equals(name) && a.getSurname().equals(surname)).findFirst();
-        if (result.isPresent()) {
-            return result.get();
-        }
-        return null;
+        return result.orElse(null);
     }
 
     @Override
@@ -44,5 +42,10 @@ public class MySQLAuthorDAO implements AuthorDAO {
     @Override
     public void deleteAuthor(Author author) {
         author.delete();
+    }
+
+    @Override
+    public List<Author> getAuthors() {
+        return Author.find.all();
     }
 }

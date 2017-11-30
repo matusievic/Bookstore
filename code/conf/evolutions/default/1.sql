@@ -21,6 +21,16 @@ create table author (
   constraint pk_author primary key (id)
 );
 
+create table book (
+  id                            integer auto_increment not null,
+  name                          varchar(255),
+  author_id                     integer,
+  category_id                   integer,
+  price                         double,
+  description                   varchar(255),
+  constraint pk_book primary key (id)
+);
+
 create table category (
   id                            integer auto_increment not null,
   name                          varchar(255),
@@ -33,6 +43,8 @@ create table category (
 drop table if exists account;
 
 drop table if exists author;
+
+drop table if exists book;
 
 drop table if exists category;
 

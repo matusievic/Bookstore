@@ -1,0 +1,24 @@
+@import entities.category.Category
+
+@(category: Category, form: Form[Category])
+
+@main("Edit category - Bookstore") {
+    @helper.form(action = helper.CSRF(routes.CategoryController.update(category.getId))) {
+        <form class="form-group">
+            <h2 class="text-center">Edit category</h2>
+            <br>
+            @if(form.hasGlobalErrors) {
+                <p class="error">
+                @form.getGlobalError.get.message
+                </p>
+            }
+
+            <label for="inputName" class="sr-only">Category name</label>
+            <input type="text" name="name" id="inputName" value="@category.getName" class="form-control" placeholder="Category name" required autofocus>
+            <br>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+
+        </form>
+    }
+}

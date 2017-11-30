@@ -1,14 +1,21 @@
 package controllers;
 
 import entities.account.Account;
+import entities.author.Author;
+import entities.book.Book;
+import entities.category.Category;
 import play.mvc.*;
 import play.data.*;
 
 import services.account.AccountService;
 import services.ServiceFactory;
+import services.author.AuthorService;
+import services.category.CategoryService;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application extends Controller {
     @Inject
@@ -19,7 +26,13 @@ public class Application extends Controller {
     }
 
     public Result catalog() {
-        return TODO;
+        CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
+        List<Category> categories = categoryService.getCategories();
+
+        AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
+        List<Author> authors = authorService.getAuthors();
+
+        return ok(catalog.render(categories, authors, new ArrayList<Book>()));
     }
 
     public Result help() {
