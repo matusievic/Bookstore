@@ -19,10 +19,7 @@ public class CategoryController extends Controller {
     FormFactory formFactory;
 
     public Result update(int id) {
-        String accountType = session("accountType");
-        if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
-        }
+        if (!isAccountHasAccess()) return ok(index.render());
 
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
         Category category = categoryService.get(id);
@@ -38,11 +35,13 @@ public class CategoryController extends Controller {
         return ok(views.html.category.category.render(category, categoryForm));
     }
 
-    public Result delete(int id) {
+    private boolean isAccountHasAccess() {
         String accountType = session("accountType");
-        if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
-        }
+        return accountType != null && accountType.equals(AccountType.ADMIN.toString());
+    }
+
+    public Result delete(int id) {
+        if (!isAccountHasAccess()) return ok(index.render());
 
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
         Category category = categoryService.get(id);
@@ -54,10 +53,7 @@ public class CategoryController extends Controller {
     }
 
     public Result edit(int id) {
-        String accountType = session("accountType");
-        if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
-        }
+        if (!isAccountHasAccess()) return ok(index.render());
 
         Form<Category> categoryForm = formFactory.form(Category.class);
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
@@ -68,10 +64,7 @@ public class CategoryController extends Controller {
     }
 
     public Result categories() {
-        String accountType = session("accountType");
-        if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
-        }
+        if (!isAccountHasAccess()) return ok(index.render());
 
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
         List<Category> categories = categoryService.getCategories();
@@ -81,23 +74,14 @@ public class CategoryController extends Controller {
     }
 
     public Result create() {
-        String accountType = session("accountType");
-        if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
-        }
-
-        CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
-        int maxId = categoryService.getCategories().stream().max(Comparator.comparing(Category::getId)).orElseGet(null).getId();
+        if (!isAccountHasAccess()) return ok(index.render());
 
         Form<Category> categoryForm = formFactory.form(Category.class).bindFromRequest();
         return ok(views.html.category.create.render(categoryForm));
     }
 
     public Result save() {
-        String accountType = session("accountType");
-        if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
-        }
+        if (!isAccountHasAccess()) return ok(index.render());
 
         Form<Category> categoryForm = formFactory.form(Category.class).bindFromRequest();
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();

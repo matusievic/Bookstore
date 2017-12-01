@@ -43,5 +43,14 @@ GET         /category/delete/:id        controllers.CategoryController.delete(id
 POST        /category/save              controllers.CategoryController.save
 GET         /category/create            controllers.CategoryController.create
 
+
+# Author actions
+GET         /author/all               controllers.AuthorController.authors
+GET         /author/edit/:id          controllers.AuthorController.edit(id: Int)
+POST        /author/update/:id        controllers.AuthorController.update(id: Int)
+GET         /author/delete/:id        controllers.AuthorController.delete(id: Int)
+POST        /author/save              controllers.AuthorController.save
+GET         /author/create            controllers.AuthorController.create
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file               controllers.Assets.at(path="/public", file)

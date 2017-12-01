@@ -1,0 +1,32 @@
+@import entities.author.Author
+
+@(form: Form[Author])
+
+@main("Create author - Bookstore") {
+    @helper.form(action = helper.CSRF(routes.AuthorController.save())) {
+        <form class="form-group">
+            <h2 class="text-center">Create author</h2>
+            <br>
+            @if(form.hasGlobalErrors) {
+                <p class="error">
+                @form.getGlobalError.get.message
+                </p>
+            }
+
+            <label for="inputName" class="sr-only">Author name</label>
+            <input type="text" name="name" id="inputName" class="form-control" placeholder="Author name" required autofocus>
+            <br>
+
+            <label for="inputSurname" class="sr-only">Author surname</label>
+            <input type="text" name="surname" id="inputSurname" class="form-control" placeholder="Author surname" required autofocus>
+            <br>
+
+            <label for="inputDescription" class="sr-only">Author description</label>
+            <input type="text" name="description" id="inputDescription" class="form-control" placeholder="Author description" required autofocus>
+            <br>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+
+        </form>
+    }
+}

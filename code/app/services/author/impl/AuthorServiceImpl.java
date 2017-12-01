@@ -9,6 +9,16 @@ import java.util.List;
 
 public class AuthorServiceImpl implements AuthorService {
     private AuthorDAO authorDAO = DAOFactory.getInstance().getAuthorDAO();
+
+    @Override
+    public Author add(String name, String surname, String description) {
+        return authorDAO.createAuthor(name, surname, description);
+    }
+
+    @Override
+    public Author get(int id) {
+        return authorDAO.readAuthor(id);
+    }
     @Override
     public Author get(String name, String surname) {
         return authorDAO.readAuthor(name, surname);

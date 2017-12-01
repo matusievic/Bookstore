@@ -34,6 +34,11 @@ public class MySQLAuthorDAO implements AuthorDAO {
     }
 
     @Override
+    public Author readAuthor(int id) {
+        return Author.find.byId(id);
+    }
+
+    @Override
     public Author updateAuthor(Author author) {
         author.update();
         return author;

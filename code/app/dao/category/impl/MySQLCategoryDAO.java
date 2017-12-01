@@ -2,7 +2,6 @@ package dao.category.impl;
 
 import dao.category.CategoryDAO;
 import entities.category.Category;
-import io.ebean.Model;
 
 import java.util.Comparator;
 import java.util.List;
@@ -10,15 +9,13 @@ import java.util.Optional;
 
 public class MySQLCategoryDAO implements CategoryDAO {
     @Override
-    public Category createCategory(String categoryName) {
+    public Category createCategory(Category category) {
         Optional<Category> maxIdCategory = Category.find.all().stream().max(Comparator.comparing(Category::getId));
         int maxId = 0;
         if (maxIdCategory.isPresent()) {
             maxId = maxIdCategory.get().getId() + 1;
         }
-        Category category = new Category();
         category.setId(maxId);
-        category.setName(categoryName);
         category.save();
         return category;
     }

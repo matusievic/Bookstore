@@ -5,7 +5,7 @@ import entities.category.Category;
 import java.util.List;
 
 public interface CategoryDAO {
-    Category createCategory(String categoryName);
+    Category createCategory(Category category);
     Category readCategory(String categoryName);
     Category readCategory(int id);
     Category updateCategory(Category category);
