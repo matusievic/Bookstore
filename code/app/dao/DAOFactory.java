@@ -4,14 +4,17 @@ import dao.account.AccountDAO;
 import dao.account.impl.MySQLAccountDAO;
 import dao.author.AuthorDAO;
 import dao.author.impl.MySQLAuthorDAO;
+import dao.book.BookDAO;
+import dao.book.impl.MySQLBookDAO;
 import dao.category.CategoryDAO;
 import dao.category.impl.MySQLCategoryDAO;
 
 public final class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
-    private AccountDAO accountDAO = new MySQLAccountDAO();
-    private CategoryDAO categoryDAO = new MySQLCategoryDAO();
-    private AuthorDAO authorDAO = new MySQLAuthorDAO();
+    private final AccountDAO accountDAO = new MySQLAccountDAO();
+    private final CategoryDAO categoryDAO = new MySQLCategoryDAO();
+    private final AuthorDAO authorDAO = new MySQLAuthorDAO();
+    private final BookDAO bookDAO = new MySQLBookDAO();
 
     private DAOFactory() {}
     public static DAOFactory getInstance() {
@@ -26,5 +29,8 @@ public final class DAOFactory {
     }
     public AuthorDAO getAuthorDAO() {
         return authorDAO;
+    }
+    public BookDAO getBookDAO() {
+        return bookDAO;
     }
 }

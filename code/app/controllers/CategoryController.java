@@ -8,15 +8,14 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.ServiceFactory;
 import services.category.CategoryService;
-import views.html.*;
+import views.html.index;
 
 import javax.inject.Inject;
-import java.util.Comparator;
 import java.util.List;
 
 public class CategoryController extends Controller {
     @Inject
-    FormFactory formFactory;
+    private FormFactory formFactory;
 
     public Result update(int id) {
         if (!isAccountHasAccess()) return ok(index.render());
@@ -32,7 +31,10 @@ public class CategoryController extends Controller {
 
         category.setName(categoryForm.get().getName());
         categoryService.updateCategory(category);
-        return ok(views.html.category.category.render(category, categoryForm));
+
+        List<Category> categories = categoryService.getCategories();
+
+        return ok(views.html.category.categories.render(categories));
     }
 
     private boolean isAccountHasAccess() {
@@ -59,7 +61,7 @@ public class CategoryController extends Controller {
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
         Category category = categoryService.get(id);
 
-        return ok(views.html.category.category.render(category, categoryForm));
+        return ok(views.html.category.edit.render(category, categoryForm));
 
     }
 

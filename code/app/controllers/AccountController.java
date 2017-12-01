@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 public class AccountController extends Controller {
     @Inject
-    FormFactory formFactory;
+    private FormFactory formFactory;
 
     public Result authenticate() {
         Form<LoginForm> loginForm = formFactory.form(LoginForm.class).bindFromRequest();

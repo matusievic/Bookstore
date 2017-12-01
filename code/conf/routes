@@ -52,5 +52,15 @@ GET         /author/delete/:id        controllers.AuthorController.delete(id: In
 POST        /author/save              controllers.AuthorController.save
 GET         /author/create            controllers.AuthorController.create
 
+
+# Book actions
+GET         /book/all               controllers.BookController.books
+GET         /book/edit/:id          controllers.BookController.edit(id: Int)
+POST        /book/update/:id        controllers.BookController.update(id: Int)
+GET         /book/delete/:id        controllers.BookController.delete(id: Int)
+POST        /book/save              controllers.BookController.save
+GET         /book/create            controllers.BookController.create
+GET         /book/:id               controllers.BookController.get(id: Int)
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file               controllers.Assets.at(path="/public", file)

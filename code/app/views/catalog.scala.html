@@ -1,21 +1,24 @@
-@import entities.category.Category;
-@import entities.author.Author;
-@import entities.book.Book;
+@import entities.category.Category
+@import entities.author.Author
+@import entities.account.AccountType
 
-@(categoryList: List[Category], authorList: List[Author], bookList: List[Book])
+@(title: String, categoryList: List[Category], authorList: List[Author])(bookContent: Html)
 
+@main(title) {
+    <div class="row">
+        <div class="col-md-4">
+            @for(c <- categoryList) { <ul class="nav nav-pills nav-stacked">@c.getName</ul> }
+            @if(session().get("accountType") == AccountType.ADMIN.toString) {
+                <a href="@routes.CategoryController.categories">Edit categories</a>
+            }
+            @for(a <- authorList) { <ul class="nav nav-pills nav-stacked">@{ a.getName + " " + a.getSurname }</ul> }
+            @if(session().get("accountType") == AccountType.ADMIN.toString) {
+                <a href="@routes.AuthorController.authors">Edit authors</a>
+            }
+        </div>
 
-@main("Calatog - Bookstore") {
-	<div class="row">
-		<div class="col-md-4">
-		@for(c <- categoryList) {
-			<ul class="nav nav-pills nav-stacked">@c.getName</ul>
-		}
-			<a href="@routes.CategoryController.categories">Edit categories</a>
-		@for(a <- authorList) {
-			<ul class="nav nav-pills nav-stacked">@{a.getName + " " + a.getSurname}</ul>
-		}
-			<a href="@routes.AuthorController.authors">Edit authors</a>
-		</div>
-	</div>
+        <div class="col-md-8">
+            @bookContent
+        </div>
+    </div>
 }

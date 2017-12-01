@@ -4,6 +4,8 @@ import services.account.AccountService;
 import services.account.impl.AccountServiceImpl;
 import services.author.AuthorService;
 import services.author.impl.AuthorServiceImpl;
+import services.book.BookService;
+import services.book.impl.BookServiceImpl;
 import services.category.CategoryService;
 import services.category.impl.CategoryServiceImpl;
 
@@ -12,6 +14,7 @@ public final class ServiceFactory {
 	private final AccountService accountService = new AccountServiceImpl();
 	private final CategoryService categoryService = new CategoryServiceImpl();
 	private final AuthorService authorService = new AuthorServiceImpl();
+	private final BookService bookService = new BookServiceImpl();
 
 	private ServiceFactory() {}
 	public static ServiceFactory getInstance() {
@@ -26,5 +29,8 @@ public final class ServiceFactory {
 	}
 	public AuthorService getAuthorService() {
 		return authorService;
+	}
+	public BookService getBookService() {
+		return bookService;
 	}
 }

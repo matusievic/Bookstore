@@ -17,7 +17,7 @@ import static play.mvc.Results.ok;
 
 public class AuthorController {
     @Inject
-    FormFactory formFactory;
+    private FormFactory formFactory;
 
     public Result update(int id) {
         String accountType = session("accountType");
@@ -38,7 +38,10 @@ public class AuthorController {
         author.setSurname(authorForm.get().getSurname());
         author.setDescription(authorForm.get().getDescription());
         authorService.updateAuthor(author);
-        return ok(views.html.author.author.render(author, authorForm));
+
+        List<Author> authors = authorService.getAuthors();
+
+        return ok(views.html.author.authors.render(authors));
     }
 
     public Result delete(int id) {
@@ -66,7 +69,7 @@ public class AuthorController {
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
         Author author = authorService.get(id);
 
-        return ok(views.html.author.author.render(author, authorForm));
+        return ok(views.html.author.edit.render(author, authorForm));
 
     }
 

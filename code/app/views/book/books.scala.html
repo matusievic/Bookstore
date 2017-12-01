@@ -1,0 +1,47 @@
+@import entities.book.Book
+@import entities.category.Category
+@import entities.author.Author
+@import entities.account.AccountType
+
+@(books: List[Book], categories: List[Category], authors: List[Author])
+
+@catalog("Books - Bookstore", categories, authors) {
+    @if(session().get("accountType") == AccountType.ADMIN.toString) {
+        <a href="@routes.BookController.create">create</a>
+    }
+    <div class="media">
+    @for(b <- books) {
+        <div class="media-left">
+            <img class="media-object" src="@routes.Assets.at(b.getImageURL)" alt="Book">
+            <div class="media-body">
+                <h3 class="media-heading">@{
+                    val a = authors.find(a => a.getId == b.getAuthorId)
+                    b.getName + " - " + {
+                        if(a.isDefined) a.get.getName + ' ' + a.get.getSurname else "Unknown Author"
+                    }
+                }</h3>
+                <p>
+                    <a href="@routes.BookController.get(b.getId)">learn more</a>
+                </p>
+                <p>
+                @if(session().get("accountType") == AccountType.CUSTOMER.toString) {
+                    <a href="@routes.BookController.edit(b.getId)">add to cart</a>
+                }
+                </p>
+                <p>@{
+                    val descr = b.getDescription
+                    if(descr.length > 50) descr.substring(0, 50) + "..." else descr
+                }</p>
+                <p>
+                @if(session().get("accountType") == AccountType.ADMIN.toString) {
+                    <a href="@routes.BookController.edit(b.getId)">edit</a>
+                    <a href="@routes.BookController.delete(b.getId)">delete</a>
+                }
+                </p>
+            </div>
+        </div>
+        <br>
+        <br>
+        }
+    </div>
+}

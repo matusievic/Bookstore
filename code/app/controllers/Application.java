@@ -10,6 +10,7 @@ import play.data.*;
 import services.account.AccountService;
 import services.ServiceFactory;
 import services.author.AuthorService;
+import services.book.BookService;
 import services.category.CategoryService;
 import views.html.*;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class Application extends Controller {
     @Inject
-    FormFactory formFactory;
+    private FormFactory formFactory;
 
     public Result index() {
         return ok(index.render());
@@ -32,7 +33,10 @@ public class Application extends Controller {
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
         List<Author> authors = authorService.getAuthors();
 
-        return ok(catalog.render(categories, authors, new ArrayList<Book>()));
+        BookService bookService = ServiceFactory.getInstance().getBookService();
+        List<Book> books = bookService.getBooks();
+
+        return ok(views.html.book.books.render(books, categories, authors));
     }
 
     public Result help() {

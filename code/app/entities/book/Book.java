@@ -10,9 +10,11 @@ public class Book extends Model {
     @Id
     private int id;
     private String name;
+    private String imageURL;
     private int authorId;
     private int categoryId;
     private double price;
+    private int pageCount;
     private String description;
 
     public static final Finder<Integer, Book> find = new Finder<>(Book.class);
@@ -34,6 +36,13 @@ public class Book extends Model {
         this.name = name;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
     public int getAuthorId() {
         return authorId;
     }
@@ -53,6 +62,13 @@ public class Book extends Model {
     }
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
 
     public String getDescription() {

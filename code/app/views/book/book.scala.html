@@ -1,0 +1,32 @@
+@import entities.book.Book
+@import entities.author.Author
+@import entities.category.Category
+@import entities.account.AccountType
+
+@(book: Book, authors: List[Author], categories: List[Category])
+
+@catalog(book.getName + " - Bookstore", categories, authors) {
+    <div class="media">
+        <div class="media-left">
+            <img class="media-object" src="@routes.Assets.at(book.getImageURL)" alt="Book">
+            <h1 class="media-heading">@book.getName</h1>
+            <h2 class="media-heading">Author: @{
+                val a = authors.find(a => a.getId == book.getAuthorId)
+                if(a.isDefined) {
+                    a.get.getName + ' ' + a.get.getSurname
+                } else "Unknown author"
+            }</h2>
+            <h2 class="media-heading">
+                Category: @{
+                val c = categories.find(c => c.getId == book.getCategoryId)
+                if(c.isDefined) c.get.getName else "Unknown category"
+            }</h2>
+            <h2 class="media-heading">Pages: @book.getPageCount</h2>
+            <h2 class="media-heading">Price: @book.getPrice</h2>
+            @if(session().get("accountType") == null || session().get("accountType") == AccountType.CUSTOMER.toString) {
+                <button>Add to chart</button>
+            }
+            <h5 class="media-body">@book.getDescription</h5>
+        </div>
+    </div>
+}

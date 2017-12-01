@@ -1,0 +1,58 @@
+@import entities.book.Book
+@import entities.author.Author
+@import entities.category.Category
+
+@(book: Book, form: Form[Book], authors: List[Author], categories: List[Category])
+
+@main("Edit edit - Bookstore") {
+    @helper.form(action = helper.CSRF(routes.BookController.update(book.getId))) {
+        <form class="form-group">
+            <h2 class="text-center">Edit edit</h2>
+            <br>
+            @if(form.hasGlobalErrors) {
+                <p class="error">
+                @form.getGlobalError.get.message
+                </p>
+            }
+
+            <label for="inputName" class="sr-only">Name</label>
+            <input type="text" name="name" id="inputName" value="@book.getName" class="form-control" placeholder="Book name" required autofocus>
+            <br>
+
+            <label for="inputImageURL" class="sr-only">Image</label>
+            <input type="text" name="imageURL" id="inputImageURL" value="@book.getImageURL" class="form-control" placeholder="Book image URL" required>
+            <br>
+
+            <label for="inputAuthorId" class="sr-only">Author</label>
+            <select name="authorId" id="inputAuthorId" class="form-control" required>
+            @for(a <- authors) {
+                <option @if(a.getId == book.getAuthorId) { selected="selected" } value="@a.getId">@{a.getName + ' ' + a.getSurname} </option>
+            }
+            </select>
+            <br>
+
+            <label for="inputCategoryId" class="sr-only">Category</label>
+            <select name="categoryId" id="inputCategoryId" class="form-control" required>
+            @for(c <- categories) {
+                <option @if(c.getId == book.getCategoryId) { selected="selected" } value="@c.getId">@c.getName</option>
+            }
+            </select>
+            <br>
+
+            <label for="inputPrice" class="sr-only">Price</label>
+            <input type="text" name="price" id="inputPrice" value="@book.getPrice" class="form-control" placeholder="Book price" required>
+            <br>
+
+            <label for="inputPageCount" class="sr-only">Page count</label>
+            <input type="text" name="pageCount" id="inputPageCount" value="@book.getPageCount" class="form-control" placeholder="Page count" required>
+            <br>
+
+            <label for="inputDescription" class="sr-only">Description</label>
+            <textarea name="description" id="inputDescription" class="form-control" placeholder="Book description" required>@book.getDescription</textarea>
+            <br>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+
+        </form>
+    }
+}

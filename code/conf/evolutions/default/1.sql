@@ -24,9 +24,11 @@ create table author (
 create table book (
   id                            integer auto_increment not null,
   name                          varchar(255),
+  image_url                     varchar(255),
   author_id                     integer,
   category_id                   integer,
   price                         double,
+  page_count                    integer,
   description                   varchar(255),
   constraint pk_book primary key (id)
 );
