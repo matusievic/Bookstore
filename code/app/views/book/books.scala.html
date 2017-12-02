@@ -25,7 +25,7 @@
                 </p>
                 <p>
                 @if(session().get("accountType") == AccountType.CUSTOMER.toString) {
-                    <a href="@routes.BookController.edit(b.getId)">add to cart</a>
+                    <a href="@routes.CartController.add(b.getId)">add to cart</a>
                 }
                 </p>
                 <p>@{

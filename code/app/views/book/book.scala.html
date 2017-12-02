@@ -24,7 +24,7 @@
             <h2 class="media-heading">Pages: @book.getPageCount</h2>
             <h2 class="media-heading">Price: @book.getPrice</h2>
             @if(session().get("accountType") == null || session().get("accountType") == AccountType.CUSTOMER.toString) {
-                <button>Add to chart</button>
+                <a href="@routes.CartController.add(book.getId)">Add to chart</a>
             }
             <h5 class="media-body">@book.getDescription</h5>
         </div>

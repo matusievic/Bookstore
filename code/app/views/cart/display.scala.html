@@ -1,0 +1,68 @@
+@import entities.book.Book
+@import entities.category.Category
+@import entities.author.Author
+
+@(books: Map[Int, Book], categories: List[Category], authors: List[Author], currentPage: Int, pageCount: Int)
+
+@main("Cart - Bookstore") {
+    <div class="row">
+        <div class="col-md-8">
+            @*Cart content*@
+            <div class="media">
+            @for((i, b) <- books) {
+                <div class="media-left">
+                    <img class="media-object" src="@routes.Assets.at(b.getImageURL)" alt="Book">
+                    <div class="media-body">
+                        <h3 class="media-heading">@{
+                            val a = authors.find(a => a.getId == b.getAuthorId)
+                            b.getName + " - " + {
+                                if(a.isDefined) a.get.getName + ' ' + a.get.getSurname else "Unknown Author"
+                            }
+                        }</h3>
+                        <p><a href="@routes.BookController.get(b.getId)">learn more</a></p>
+                        <p>@{
+                            val descr = b.getDescription
+                            if(descr.length > 50) descr.substring(0, 50) + "..." else descr
+                        }</p>
+                        <p><a href="@routes.CartController.delete(i)">delete</a></p>
+                    </div>
+                </div>
+                <br>
+                <br>
+                }
+            </div>
+
+            @*Pagination*@
+            <ul class="pagination">
+                @if(currentPage > 1) {
+                    <li>
+                        <a href="@routes.CartController.display(currentPage - 1)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+                @for(p <- 1 to pageCount) {
+                    <li class="@{
+                        if(p == currentPage) "active"
+                    }"><a href="@routes.CartController.display(p)"> @p @if(p == currentPage) {
+                        <span class="sr-only">(current)</span>
+                    }</a>
+                    </li>
+                }
+                @if(currentPage < pageCount) {
+                    <li>
+                        <a href="@routes.CartController.display(currentPage + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <h1>Total price: @books.values.foldLeft(0d)((res, b) => res + b.getPrice) $</h1>
+
+            <a href="@routes.CartController.order">Order</a>
+            <a href="@routes.CartController.clear">Clear</a>
+
+        </div>
+    </div>
+}

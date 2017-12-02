@@ -20,6 +20,9 @@
                     <li><a href="@routes.Application.orders">Orders</a></li>
                     <li><a href="@routes.Application.accounts">Users</a></li>
                 }
+                @if(session.containsKey("email") && session.get("accountType") == AccountType.CUSTOMER.toString) {
+                <li><a href="@routes.CartController.display(1)">Cart</a></li>
+                }
                 <li><a href="@routes.Application.about">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

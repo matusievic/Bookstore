@@ -55,12 +55,12 @@ public class BookController extends Controller {
 
         Pagination<Book> pagination = new Pagination<>();
         pagination.setData(books);
-        pagination.setCurrentPage(currentPage);
+        pagination.setCurrentPage(0);
         pagination.setItemPerPage(BOOK_PER_PAGE);
 
         books = Paginator.paginate(pagination);
 
-        return ok(views.html.book.books.render(books, categories, authors));
+        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount(), -1, -1));
     }
 
     private boolean isAccountHasAccess() {
@@ -90,7 +90,7 @@ public class BookController extends Controller {
 
         books = Paginator.paginate(pagination);
 
-        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount()));
+        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount(), -1, -1));
     }
 
     public Result edit(int id) {
@@ -177,7 +177,7 @@ public class BookController extends Controller {
 
         books = Paginator.paginate(pagination);
 
-        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount()));
+        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount(), -1, -1));
     }
 
     public Result get(int id) {
