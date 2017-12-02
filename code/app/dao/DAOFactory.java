@@ -8,6 +8,8 @@ import dao.book.BookDAO;
 import dao.book.impl.MySQLBookDAO;
 import dao.category.CategoryDAO;
 import dao.category.impl.MySQLCategoryDAO;
+import dao.order.OrderDAO;
+import dao.order.impl.MySQLOrderDAO;
 
 public final class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
@@ -15,6 +17,7 @@ public final class DAOFactory {
     private final CategoryDAO categoryDAO = new MySQLCategoryDAO();
     private final AuthorDAO authorDAO = new MySQLAuthorDAO();
     private final BookDAO bookDAO = new MySQLBookDAO();
+    private final OrderDAO orderDAO = new MySQLOrderDAO();
 
     private DAOFactory() {}
     public static DAOFactory getInstance() {
@@ -32,5 +35,8 @@ public final class DAOFactory {
     }
     public BookDAO getBookDAO() {
         return bookDAO;
+    }
+    public OrderDAO getOrderDAO() {
+        return orderDAO;
     }
 }

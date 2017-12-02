@@ -22,7 +22,6 @@ public class MySQLAccountDAO implements AccountDAO {
         for (Account account : accounts) {
             if (account.getEmail().equals(email) && account.getPassword().equals(password)) { return true; }
         }
-
         return false;
     }
 
@@ -34,8 +33,12 @@ public class MySQLAccountDAO implements AccountDAO {
                 return account;
             }
         }
-
         return null;
+    }
+
+    @Override
+    public Account getAccount(String email) {
+        return Account.find.byId(email);
     }
 
     @Override
@@ -54,5 +57,10 @@ public class MySQLAccountDAO implements AccountDAO {
         account.setType(type);
         account.save();
         return account;
+    }
+
+    @Override
+    public void deleteAccount(Account account) {
+        account.delete();
     }
 }

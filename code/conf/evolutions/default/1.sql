@@ -39,6 +39,19 @@ create table category (
   constraint pk_category primary key (id)
 );
 
+create table order (
+  id                            integer auto_increment not null,
+  account_id                    varchar(255),
+  date                          datetime(6),
+  address                       varchar(255),
+  phone                         varchar(255),
+  zip                           integer,
+  status                        integer,
+  answer                        varchar(255),
+  constraint ck_order_status check ( status in (0,1,2,3)),
+  constraint pk_order primary key (id)
+);
+
 
 # --- !Downs
 
@@ -49,4 +62,6 @@ drop table if exists author;
 drop table if exists book;
 
 drop table if exists category;
+
+drop table if exists order;
 

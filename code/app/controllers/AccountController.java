@@ -17,6 +17,8 @@ import services.validator.AccountValidator;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccountController extends Controller {
     @Inject
@@ -132,6 +134,18 @@ public class AccountController extends Controller {
 
         session().clear();
         return ok(index.render());
+    }
+
+    public Result remove(String id) {
+        if (session("accountType").equals(AccountType.ADMIN.toString())) {
+            return ok(index.render());
+        }
+
+        AccountService accountService = ServiceFactory.getInstance().getAccountService();
+        accountService.delete(id);
+
+        List<Account> accounts = Account.find.all().stream().filter(a -> a.getType() != AccountType.ADMIN).collect(Collectors.toList());
+        return ok(views.html.admin.accounts.render(accounts));
     }
 
     public static class LoginForm {

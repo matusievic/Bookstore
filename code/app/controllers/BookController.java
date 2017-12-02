@@ -4,6 +4,7 @@ import entities.account.AccountType;
 import entities.author.Author;
 import entities.book.Book;
 import entities.category.Category;
+import entities.pagination.Pagination;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -12,6 +13,7 @@ import services.ServiceFactory;
 import services.author.AuthorService;
 import services.book.BookService;
 import services.category.CategoryService;
+import services.paginator.Paginator;
 import views.html.index;
 
 import javax.inject.Inject;
@@ -20,6 +22,7 @@ import java.util.List;
 public class BookController extends Controller {
     @Inject
     private FormFactory formFactory;
+    private static final int BOOK_PER_PAGE = 10;
 
     public Result update(int id) {
         if (!isAccountHasAccess()) { return ok(index.render()); }
@@ -50,6 +53,13 @@ public class BookController extends Controller {
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
         List<Author> authors = authorService.getAuthors();
 
+        Pagination<Book> pagination = new Pagination<>();
+        pagination.setData(books);
+        pagination.setCurrentPage(currentPage);
+        pagination.setItemPerPage(BOOK_PER_PAGE);
+
+        books = Paginator.paginate(pagination);
+
         return ok(views.html.book.books.render(books, categories, authors));
     }
 
@@ -73,7 +83,14 @@ public class BookController extends Controller {
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
         List<Author> authors = authorService.getAuthors();
 
-        return ok(views.html.book.books.render(books, categories, authors));
+        Pagination<Book> pagination = new Pagination<>();
+        pagination.setData(books);
+        pagination.setCurrentPage(1);
+        pagination.setItemPerPage(BOOK_PER_PAGE);
+
+        books = Paginator.paginate(pagination);
+
+        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount()));
     }
 
     public Result edit(int id) {
@@ -93,7 +110,7 @@ public class BookController extends Controller {
 
     }
 
-    public Result books() {
+    public Result books(int currentPage) {
         if (!isAccountHasAccess()) { return ok(index.render()); }
 
         BookService bookService = ServiceFactory.getInstance().getBookService();
@@ -105,7 +122,13 @@ public class BookController extends Controller {
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
         List<Author> authors = authorService.getAuthors();
 
-        return ok(views.html.book.books.render(books, categories, authors));
+        int totalPage = books.size() / BOOK_PER_PAGE;
+        if (currentPage > totalPage) {
+            currentPage = 1;
+        }
+        books = books.subList((currentPage - 1) * BOOK_PER_PAGE, currentPage * BOOK_PER_PAGE);
+
+        return ok(views.html.book.books.render(books, categories, authors, currentPage, totalPage, -1, -1));
 
     }
 
@@ -147,7 +170,14 @@ public class BookController extends Controller {
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
         List<Author> authors = authorService.getAuthors();
 
-        return ok(views.html.book.books.render(books, categories, authors));
+        Pagination<Book> pagination = new Pagination<>();
+        pagination.setData(books);
+        pagination.setCurrentPage(1);
+        pagination.setItemPerPage(BOOK_PER_PAGE);
+
+        books = Paginator.paginate(pagination);
+
+        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount()));
     }
 
     public Result get(int id) {

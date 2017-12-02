@@ -1,0 +1,22 @@
+@import entities.account.Account
+
+@(accounts: List[Account])
+
+@main("Users - Bookstore") {
+    <table>
+        <tr>
+            <td>Email</td>
+            <td>Name</td>
+            <td>Surname</td>
+            <td>Deactivate</td>
+        </tr>
+        <tr>
+        @for(a <- accounts) {
+            <td>@a.getEmail</td>
+            <td>@a.getName</td>
+            <td>@a.getSurname</td>
+            <td><a href="@routes.AccountController.remove(a.getEmail)">Remove</a></td>
+        }
+        </tr>
+    </table>
+}

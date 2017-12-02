@@ -49,6 +49,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account getAccountInfo(String email) {
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
+        return accountDAO.getAccount(email);
+    }
+
+    @Override
     public Account changeName(String email, String password, String newName, String newSurname) {
         AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         Account account = accountDAO.getAccount(email, password);
@@ -72,12 +78,9 @@ public class AccountServiceImpl implements AccountService {
         AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
         Account account = accountDAO.getAccount(email, password);
         if (account != null) {
-            account.setEmail(account.getEmail() + "_deactivated");
             account.setPassword("");
-            account.setName(account.getName() + "_deactivated");
-            account.setSurname(account.getSurname() + "_deactivated");
+            accountDAO.updateAccount(account);
         }
-        accountDAO.updateAccount(account);
     }
 
     private String encryptPassword(String password) throws ServiceException {
@@ -90,5 +93,13 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException(e);
         }
         return encryptedPassword;
+    }
+
+    @Override
+    public void delete(String email) {
+        AccountDAO accountDAO = DAOFactory.getInstance().getAccountDAO();
+        Account account = accountDAO.getAccount(email);
+
+        accountDAO.deleteAccount(account);
     }
 }

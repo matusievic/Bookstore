@@ -12,9 +12,11 @@ public interface AccountService {
     Account register(String email, String password, String name, String surname, AccountType type) throws ServiceException;
 
     Account getAccountInfo(String email, String password);
+    Account getAccountInfo(String email);
 
     Account changeName(String email, String password, String newName, String newSurname);
     Account changePassword(String email, String oldPassword, String newPassword) throws ServiceException;
 
     void deactivate(String email, String password);
+    void delete(String email);
 }

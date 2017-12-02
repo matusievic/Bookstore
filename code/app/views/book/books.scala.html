@@ -3,7 +3,7 @@
 @import entities.author.Author
 @import entities.account.AccountType
 
-@(books: List[Book], categories: List[Category], authors: List[Author])
+@(books: List[Book], categories: List[Category], authors: List[Author], currentPage: Int, pageCount: Int, authorId: Int, categoryId: Int)
 
 @catalog("Books - Bookstore", categories, authors) {
     @if(session().get("accountType") == AccountType.ADMIN.toString) {
@@ -43,5 +43,26 @@
         <br>
         <br>
         }
+
+
+        <ul class="pagination">
+            @if(currentPage > 1) {
+                <li>
+                    <a href="@routes.Application.catalog(authorId, categoryId, currentPage - 1)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for(p <- 1 to pageCount) {
+                <li class="@{if(p == currentPage) "active" }"><a href="@routes.Application.catalog(authorId, categoryId, p)"> @p @if(p == currentPage) {<span class="sr-only">(current)</span>}</a></li>
+            }
+            @if(currentPage < pageCount) {
+                <li>
+                    <a href="@routes.Application.catalog(authorId, categoryId, currentPage + 1)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
     </div>
 }

@@ -12,11 +12,11 @@ GET         /login                      controllers.Application.logIn
 GET         /signup                     controllers.Application.signUp
 
 # Catalog page
-GET         /catalog                    controllers.Application.catalog
+GET         /catalog                    controllers.Application.catalog(authorId: Int ?= -1, categoryId: Int ?= -1, page: Int ?= 1)
 # Orsers page
 GET         /orders                     controllers.Application.orders
 # Users page
-GET         /users                      controllers.Application.users
+GET         /users                      controllers.Application.accounts
 # Help page
 GET         /help                       controllers.Application.help
 # About page
@@ -31,6 +31,7 @@ GET         /logout                     controllers.AccountController.logOut
 POST        /changeName                 controllers.AccountController.changeName
 POST        /changePassword             controllers.AccountController.changePassword
 GET         /deactivate                 controllers.AccountController.deactivate
+GET         /delete                     controllers.AccountController.remove(id: String)
 # Account page
 GET         /account                    controllers.Application.account
 
@@ -45,22 +46,22 @@ GET         /category/create            controllers.CategoryController.create
 
 
 # Author actions
-GET         /author/all               controllers.AuthorController.authors
-GET         /author/edit/:id          controllers.AuthorController.edit(id: Int)
-POST        /author/update/:id        controllers.AuthorController.update(id: Int)
-GET         /author/delete/:id        controllers.AuthorController.delete(id: Int)
-POST        /author/save              controllers.AuthorController.save
-GET         /author/create            controllers.AuthorController.create
+GET         /author/all                 controllers.AuthorController.authors
+GET         /author/edit/:id            controllers.AuthorController.edit(id: Int)
+POST        /author/update/:id          controllers.AuthorController.update(id: Int)
+GET         /author/delete/:id          controllers.AuthorController.delete(id: Int)
+POST        /author/save                controllers.AuthorController.save
+GET         /author/create              controllers.AuthorController.create
 
 
 # Book actions
-GET         /book/all               controllers.BookController.books
-GET         /book/edit/:id          controllers.BookController.edit(id: Int)
-POST        /book/update/:id        controllers.BookController.update(id: Int)
-GET         /book/delete/:id        controllers.BookController.delete(id: Int)
-POST        /book/save              controllers.BookController.save
-GET         /book/create            controllers.BookController.create
-GET         /book/:id               controllers.BookController.get(id: Int)
+GET         /book/all                   controllers.BookController.books(page: Int)
+GET         /book/edit/:id              controllers.BookController.edit(id: Int)
+POST        /book/update/:id            controllers.BookController.update(id: Int)
+GET         /book/delete/:id            controllers.BookController.delete(id: Int)
+POST        /book/save                  controllers.BookController.save
+GET         /book/create                controllers.BookController.create
+GET         /book/:id                   controllers.BookController.get(id: Int)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file               controllers.Assets.at(path="/public", file)

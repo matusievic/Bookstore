@@ -8,6 +8,8 @@ import services.book.BookService;
 import services.book.impl.BookServiceImpl;
 import services.category.CategoryService;
 import services.category.impl.CategoryServiceImpl;
+import services.order.OrderService;
+import services.order.impl.OrderServiceImpl;
 
 public final class ServiceFactory {
 	private static final ServiceFactory instance = new ServiceFactory();
@@ -15,6 +17,7 @@ public final class ServiceFactory {
 	private final CategoryService categoryService = new CategoryServiceImpl();
 	private final AuthorService authorService = new AuthorServiceImpl();
 	private final BookService bookService = new BookServiceImpl();
+	private final OrderService orderService = new OrderServiceImpl();
 
 	private ServiceFactory() {}
 	public static ServiceFactory getInstance() {
@@ -32,5 +35,8 @@ public final class ServiceFactory {
 	}
 	public BookService getBookService() {
 		return bookService;
+	}
+	public OrderService getOrderService() {
+		return orderService;
 	}
 }

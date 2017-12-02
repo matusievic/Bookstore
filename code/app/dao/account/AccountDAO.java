@@ -8,6 +8,8 @@ public interface AccountDAO {
     boolean isAccountExists(String email, String password);
 
     Account getAccount(String email, String password);
+    Account getAccount(String email);
     Account updateAccount(Account account);
     Account addAccount(String email, String password, String name, String surname, AccountType type);
+    void deleteAccount(Account account);
 }
