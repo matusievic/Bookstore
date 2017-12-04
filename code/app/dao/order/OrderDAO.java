@@ -1,13 +1,13 @@
 package dao.order;
 
-import entities.order.Order;
+import entities.order.BookOrder;
 
 import java.util.List;
 
 public interface OrderDAO {
-    Order create(Order order);
-    Order read(int id);
-    List<Order> read(String email);
-    Order update(Order order);
-    void delete(Order order);
+    BookOrder create(BookOrder order);
+    BookOrder read(int id);
+    List<BookOrder> read(String email);
+    BookOrder update(BookOrder order);
+    void delete(BookOrder order);
 }

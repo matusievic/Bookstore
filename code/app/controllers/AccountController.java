@@ -2,6 +2,7 @@ package controllers;
 
 import entities.account.Account;
 import entities.account.AccountType;
+import entities.order.BookOrder;
 import play.Logger;
 import play.data.Form;
 import play.data.FormFactory;
@@ -13,6 +14,7 @@ import services.encryption.EncryptionServiceFactory;
 import services.encryption.Encryptor;
 import services.exception.EncryptorException;
 import services.exception.ServiceException;
+import services.order.OrderService;
 import services.validator.AccountValidator;
 import views.html.*;
 
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 public class AccountController extends Controller {
     @Inject
     private FormFactory formFactory;
+    private static final OrderService orderService = ServiceFactory.getInstance().getOrderService();
+    private Application applicationController;
 
     public Result authenticate() {
         Form<LoginForm> loginForm = formFactory.form(LoginForm.class).bindFromRequest();
@@ -46,7 +50,6 @@ public class AccountController extends Controller {
 
         return ok(index.render());
     }
-
 
     public Result register() {
         Form<SignupForm> signupForm = formFactory.form(SignupForm.class).bindFromRequest();
@@ -85,16 +88,17 @@ public class AccountController extends Controller {
         String email = session("email");
         String password = session("password");
         Account currentAccount = accountService.getAccountInfo(email, password);
+        List<BookOrder> orders = getOrders();
 
         if (nameForm.hasErrors()) {
-            return badRequest(account.render(currentAccount, nameForm, passwordForm));
+            return badRequest(account.render(currentAccount, nameForm, passwordForm, orders));
         }
 
         String newName = nameForm.get().name;
         String newSurname = nameForm.get().surname;
         currentAccount  = accountService.changeName(email, password, newName, newSurname);
 
-        return ok(account.render(currentAccount, nameForm, passwordForm));
+        return ok(account.render(currentAccount, nameForm, passwordForm, orders));
     }
 
     public Result changePassword() {
@@ -105,9 +109,10 @@ public class AccountController extends Controller {
         String email = session("email");
         String password = session("password");
         Account currentAccount = accountService.getAccountInfo(email, password);
+        List<BookOrder> orders = getOrders();
 
         if (passwordForm.hasErrors()) {
-            return badRequest(account.render(currentAccount, nameForm, passwordForm));
+            return badRequest(account.render(currentAccount, nameForm, passwordForm, orders));
         }
 
         String newPassword = passwordForm.get().firstPassword;
@@ -119,7 +124,7 @@ public class AccountController extends Controller {
 
         session("password", currentAccount.getPassword());
 
-        return ok(account.render(currentAccount, nameForm, passwordForm));
+        return applicationController.account();
     }
 
     public Result deactivate() {
@@ -146,6 +151,16 @@ public class AccountController extends Controller {
 
         List<Account> accounts = Account.find.all().stream().filter(a -> a.getType() != AccountType.ADMIN).collect(Collectors.toList());
         return ok(views.html.admin.accounts.render(accounts));
+    }
+
+    static List<BookOrder> getOrders() {
+        String accountType = session("accountType");
+        if (accountType == null || !accountType.equals(AccountType.CUSTOMER.toString())) {
+            return null;
+        }
+
+        String email = session("email");
+        return orderService.get(email);
     }
 
     public static class LoginForm {

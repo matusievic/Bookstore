@@ -1,7 +1,6 @@
 package controllers;
 
-import entities.account.AccountType;
-import entities.order.Order;
+import entities.order.BookOrder;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -19,16 +18,14 @@ public class OrderController extends Controller {
         if (!isAccountHasAccess()) { return ok(index.render()); }
 
         OrderService orderService = ServiceFactory.getInstance().getOrderService();
-        Order order = orderService.get(id);
+        BookOrder order = orderService.get(id);
 
-        return TODO;
+        return ok(views.html.cart.shipping.render(order));
     }
-
-
 
     private boolean isAccountHasAccess() {
         String accountType = session("accountType");
-        return accountType != null && accountType.equals(AccountType.ADMIN.toString());
+        return accountType != null;
     }
 
 }

@@ -1,11 +1,9 @@
 package entities.account;
 
-import entities.order.Order;
 import io.ebean.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.List;
 
 @Entity
 public class Account extends Model {

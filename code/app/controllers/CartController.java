@@ -1,18 +1,23 @@
 package controllers;
 
+import entities.account.Account;
 import entities.account.AccountType;
 import entities.author.Author;
 import entities.book.Book;
 import entities.category.Category;
+import entities.order.BookOrder;
 import entities.pagination.Pagination;
+import play.data.Form;
 import play.data.FormFactory;
 import play.libs.F.Tuple;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.ServiceFactory;
+import services.account.AccountService;
 import services.author.AuthorService;
 import services.book.BookService;
 import services.category.CategoryService;
+import services.order.OrderService;
 import services.paginator.Paginator;
 
 import javax.inject.Inject;
@@ -25,6 +30,11 @@ public class CartController extends Controller {
     private final BookService bookService = ServiceFactory.getInstance().getBookService();
     private final CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
     private final AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
+    private final AccountService accountService = ServiceFactory.getInstance().getAccountService();
+    private final OrderService orderService = ServiceFactory.getInstance().getOrderService();
+
+    @Inject
+    private Application applicationController;
 
     /**
      * Display cart to user
@@ -70,7 +80,8 @@ public class CartController extends Controller {
      * Add a book to the cart
      */
     public Result add(int bookId) {
-        if (!isAccountHasAccess()) { return ok(views.html.index.render()); }
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         String cartLength = session("cartLength");
         if (cartLength == null || cartLength.isEmpty()) {
@@ -78,14 +89,13 @@ public class CartController extends Controller {
             cartLength = "0";
         }
 
-        if (bookService.get(bookId) == null) { return ok(views.html.index.render()); }
+        if (bookService.get(bookId) == null) { return redirect(previousPage); }
 
         session("cartItem" + cartLength, String.valueOf(bookId));
-
         int cartLengthNumber = Integer.parseInt(cartLength);
         session("cartLength", String.valueOf(++cartLengthNumber));
 
-        return redirect(request().getHeaders().get("referer").orElse("/"));
+        return redirect(previousPage);
     }
 
     /**
@@ -110,8 +120,11 @@ public class CartController extends Controller {
      * Clear the cart
      */
     public Result clear() {
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
+
         String cartLength = session("cartLength");
-        if (cartLength == null) { return ok(views.html.index.render()); }
+        if (cartLength == null) { return redirect(previousPage); }
         int cartLengthNumber = Integer.parseInt(cartLength);
 
         for (int i = 0; i < cartLengthNumber; i++) {
@@ -125,15 +138,48 @@ public class CartController extends Controller {
      * Forms an order from the cart
      */
     public Result order() {
-        return TODO;
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
+
+        Form<BookOrder> orderForm = formFactory.form(BookOrder.class);
+        String email = session("email");
+        if (email == null || email.isEmpty()) { return redirect(previousPage); }
+        Account account = accountService.getAccountInfo(email);
+        return ok(views.html.cart.order.render(orderForm, account));
     }
 
     /**
-     * Submit an order to Administrator
-     * @return
+     * Submits an order to Administrator
      */
     public Result submit() {
-        return TODO;
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
+
+        Form<BookOrder> orderForm = formFactory.form(BookOrder.class).bindFromRequest();
+        String userId = session("email");
+        String userName = orderForm.get().getName();
+        String userSurname = orderForm.get().getSurname();
+        String currentDate = new Date().toString();
+        String address = orderForm.get().getAddress();
+        String phone = orderForm.get().getPhone();
+        int zip = orderForm.get().getZip();
+
+        StringBuilder booksBuilder = new StringBuilder();
+        String cartLength = session("cartLength");
+        if (cartLength == null) { return ok(views.html.cart.display.render(null, null, null, -1, -1)); }
+        int cartLengthNumber = Integer.parseInt(cartLength);
+        for (int i = 0; i < cartLengthNumber; i++) {
+            String currentCartItem = session("cartItem" + i);
+            if (currentCartItem == null || currentCartItem.isEmpty()) { continue; }
+            booksBuilder.append(currentCartItem);
+            booksBuilder.append(';');
+        }
+        String books = booksBuilder.toString();
+
+        orderService.add(userId, userName, userSurname, currentDate, address, phone, zip, books);
+        clear();
+
+        return applicationController.account();
     }
 
 

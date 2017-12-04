@@ -5,6 +5,7 @@ import entities.account.AccountType;
 import entities.author.Author;
 import entities.book.Book;
 import entities.category.Category;
+import entities.order.BookOrder;
 import entities.pagination.Pagination;
 import play.mvc.*;
 import play.data.*;
@@ -87,11 +88,12 @@ public class Application extends Controller {
         String email = session("email");
         String password = session("password");
         Account currentAccount = accountService.getAccountInfo(email, password);
+        List<BookOrder> orders = AccountController.getOrders();
 
         Form<AccountController.NameForm> nameForm = formFactory.form(AccountController.NameForm.class);
         Form<AccountController.PasswordForm> passwordForm = formFactory.form(AccountController.PasswordForm.class);
 
-        return ok(account.render(currentAccount, nameForm, passwordForm));
+        return ok(account.render(currentAccount, nameForm, passwordForm, orders));
     }
 
 

@@ -1,0 +1,42 @@
+@import entities.order.{BookOrder, OrderStatus}
+@import entities.account.Account
+
+@(form: Form[BookOrder], account: Account)
+
+@main("Shipping details - Bookstore") {
+    @helper.form(action = helper.CSRF(routes.CartController.submit)) {
+        <form class="form-group">
+            <h2 class="text-center">Shipping details</h2>
+            <br>
+            @if(form.hasGlobalErrors) {
+                <p class="error">
+                @form.getGlobalError.get.message
+                </p>
+            }
+
+            <label for="inputName" class="sr-only">Name</label>
+            <input type="text" name="name" id="inputName" value="@account.getName" class="form-control" placeholder="Your name" required autofocus>
+            <br>
+
+            <label for="inputSurname" class="sr-only">Surname</label>
+            <input type="text" name="surname" id="inputSurname" value="@account.getSurname" class="form-control" placeholder="Your surname" required>
+            <br>
+
+            <label for="inputAddress" class="sr-only">Address</label>
+            <input type="text" name="address" id="inputAddress" class="form-control" placeholder="Your address" required>
+            <br>
+
+            <label for="inputZipCode" class="sr-only">ZIP</label>
+            <input type="text" name="zip" id="inputZip" class="form-control" placeholder="Your ZIP code" required>
+            <br>
+
+            <label for="inputPhone" class="sr-only">Phone</label>
+            <input type="text" name="phone" id="inputPhone" class="form-control" placeholder="Your phone" required>
+            <br>
+
+            <button class="btn btn-lg btn-success btn-block" name="activity" value="ok" type="submit">OK</button>
+            <button class="btn btn-lg btn-default btn-block" name="activity" value="cancel" type="submit">Cancel</button>
+
+        </form>
+    }
+}

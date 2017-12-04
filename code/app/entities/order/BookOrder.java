@@ -1,26 +1,33 @@
 package entities.order;
 
+import entities.book.Book;
 import io.ebean.Finder;
 import io.ebean.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Order extends Model {
+public class BookOrder extends Model {
     @Id
     private int id;
     private String accountId;
-    private Date date;
+    private String name;
+    private String surname;
+    private String date;
     private String address;
-    private String phone;
     private int zip;
+    private String phone;
+    private String books;
     private OrderStatus status;
     private String answer;
-    public static final Finder<Integer, Order> find = new Finder<>(Order.class);
+    public static final Finder<Integer, BookOrder> find = new Finder<>(BookOrder.class);
 
-    public Order() {
+    public BookOrder() {
     }
 
     public int getId() {
@@ -37,10 +44,24 @@ public class Order extends Model {
         this.accountId = accountId;
     }
 
-    public Date getDate() {
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -65,6 +86,13 @@ public class Order extends Model {
         this.zip = zip;
     }
 
+    public String getBooks() {
+        return books;
+    }
+    public void setBooks(String books) {
+        this.books = books;
+    }
+
     public OrderStatus getStatus() {
         return status;
     }
@@ -84,7 +112,7 @@ public class Order extends Model {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Order order = (Order) o;
+        BookOrder order = (BookOrder) o;
 
         if (id != order.id) return false;
         if (zip != order.zip) return false;

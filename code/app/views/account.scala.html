@@ -1,67 +1,87 @@
 @import entities.account.Account
 @import entities.account.AccountType
+@import entities.order.BookOrder
 
-@(account: Account, nameForm: play.data.Form[AccountController.NameForm], passwordForm: play.data.Form[AccountController.PasswordForm])
+@(account: Account, nameForm: Form[AccountController.NameForm], passwordForm: Form[AccountController.PasswordForm], orders: List[BookOrder])
 
 @main("Account - Bookstore") {
-	<div class="container">
-	    <div class="row">
-	        <div class="col-md-10">
-	            <h1>@account.getName @account.getSurname</h1>
-	            <h2>Settings:</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h1>@account.getName @account.getSurname</h1>
+                <h2>Settings:</h2>
 
-	            @helper.form(action = helper.CSRF(routes.AccountController.changeName)) {
-		            <form class="form-group">
-	            	<h3>Personal information:</h3>
-		                <br>
+                @helper.form(action = helper.CSRF(routes.AccountController.changeName)) {
+                    <form class="form-group">
+                        <h3>Personal information:</h3>
+                        <br>
 
-		                @if(nameForm.hasGlobalErrors) {
-		                    <p class="error">
-		                    @nameForm.getGlobalError.get.message
-		                    </p>
-		                }
+                        @if(nameForm.hasGlobalErrors) {
+                            <p class="error">
+                            @nameForm.getGlobalError.get.message
+                            </p>
+                        }
 
-		                <label for="inputName" class="sr-only">Your name</label>
-		                <input type="text" name="name" id="inputName" class="form-control" value="@account.getName" placeholder="Your name" required autofocus>
-						<br>
+                        <label for="inputName" class="sr-only">Your name</label>
+                        <input type="text" name="name" id="inputName" class="form-control" value="@account.getName" placeholder="Your name" required autofocus>
+                        <br>
 
-						<label for="inputSurname" class="sr-only">Email address</label>
-						<input type="text" name="surname" id="inputSurname" class="form-control" value="@account.getSurname" placeholder="Your surname" required autofocus>
-		                <br>
+                        <label for="inputSurname" class="sr-only">Email address</label>
+                        <input type="text" name="surname" id="inputSurname" class="form-control" value="@account.getSurname" placeholder="Your surname" required autofocus>
+                        <br>
 
-		                <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
-		            </form>
-						}
-        		@helper.form(action = helper.CSRF(routes.AccountController.changePassword)) {
-		            <form class="form-group">
-		            	<h3>Password:</h3>
-		                <br>
+                        <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
+                    </form>
+                }
+                @helper.form(action = helper.CSRF(routes.AccountController.changePassword)) {
+                    <form class="form-group">
+                        <h3>Password:</h3>
+                        <br>
 
-		                @if(passwordForm.hasGlobalErrors) {
-		                    <p class="error">
-		                    @passwordForm.getGlobalError.get.message
-		                    </p>
-		                }
+                        @if(passwordForm.hasGlobalErrors) {
+                            <p class="error">
+                            @passwordForm.getGlobalError.get.message
+                            </p>
+                        }
 
-		                <label for="inputFirstPassword" class="sr-only">New password:</label>
-		                <input type="password" name="firstPassword" id="inputFirstPassword" class="form-control" placeholder="New password" required>
-		                <br>
+                        <label for="inputFirstPassword" class="sr-only">New password:</label>
+                        <input type="password" name="firstPassword" id="inputFirstPassword" class="form-control" placeholder="New password" required>
+                        <br>
 
-						<label for="inputSecondPassword" class="sr-only">Repeat new password:</label>
-						<input type="password" name="secondPassword" id="inputSecondPassword" class="form-control" placeholder="Repeat new password" required>
-						<br>
+                        <label for="inputSecondPassword" class="sr-only">Repeat new password:</label>
+                        <input type="password" name="secondPassword" id="inputSecondPassword" class="form-control" placeholder="Repeat new password" required>
+                        <br>
 
-						<label for="inputCurrentPassword" class="sr-only">Your current password:</label>
-						<input type="password" name="currentPassword" id="inputCurrentPassword" class="form-control" placeholder="Your current password" required>
-						<br>
+                        <label for="inputCurrentPassword" class="sr-only">Your current password:</label>
+                        <input type="password" name="currentPassword" id="inputCurrentPassword" class="form-control" placeholder="Your current password" required>
+                        <br>
 
-		                <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
-		            </form>
-        		}
-        		@if(session.get("accountType") != AccountType.ADMIN.toString) {
-	            	<a href="@routes.AccountController.deactivate" class="btn btn-danger">Deactivate account</a>
-	        	}
-	        </div>
-	    </div>
-	</div>
+                        <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
+                    </form>
+                }
+                @if(session.get("accountType") != AccountType.ADMIN.toString) {
+                    <table>
+                        <caption><h1>Orders</h1></caption>
+                        <thead>
+                            <tr>
+                                <td>Order</td>
+                                <td>Date</td>
+                                <td>Status</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(o <- orders) {
+                            <tr>
+                                <td><a href="@routes.OrderController.display(o.getId)">@o.getId</a></td>
+                                <td>@o.getDate</td>
+                                <td>@o.getStatus</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                    <a href="@routes.AccountController.deactivate" class="btn btn-danger">Deactivate account</a>
+                }
+            </div>
+        </div>
+    </div>
 }

@@ -57,11 +57,13 @@
                     </li>
                 }
             </ul>
-
-            <h1>Total price: @books.values.foldLeft(0d)((res, b) => res + b.getPrice) $</h1>
-
-            <a href="@routes.CartController.order">Order</a>
-            <a href="@routes.CartController.clear">Clear</a>
+            @if(books.nonEmpty) {
+                <h1>Total price: @books.values.foldLeft(0d)((res, b) => res + b.getPrice) $</h1>
+                <a href="@routes.CartController.order">BookOrder</a>
+                <a href="@routes.CartController.clear">Clear</a>
+            } else {
+                <h1>Your cart is empty!</h1>
+            }
 
         </div>
     </div>
