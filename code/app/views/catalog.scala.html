@@ -11,13 +11,13 @@
                 <ul class="nav nav-pills nav-stacked"><a href="@routes.Application.catalog(-1, c.getId)">@c.getName</a></ul>
             }
             @if(session().get("accountType") == AccountType.ADMIN.toString) {
-                <a href="@routes.CategoryController.categories">Edit categories</a>
+                <a class="btn btn-success" href="@routes.CategoryController.categories">Edit categories</a>
             }
             @for(a <- authorList) {
                 <ul class="nav nav-pills nav-stacked"><a href="@routes.Application.catalog(a.getId, -1)">@{a.getName + " " + a.getSurname}</a></ul>
             }
             @if(session().get("accountType") == AccountType.ADMIN.toString) {
-                <a href="@routes.AuthorController.authors">Edit authors</a>
+                <a class="btn btn-success" href="@routes.AuthorController.authors">Edit authors</a>
             }
         </div>
 

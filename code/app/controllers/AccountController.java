@@ -26,6 +26,7 @@ public class AccountController extends Controller {
     @Inject
     private FormFactory formFactory;
     private static final OrderService orderService = ServiceFactory.getInstance().getOrderService();
+    @Inject
     private Application applicationController;
 
     public Result authenticate() {
@@ -48,7 +49,7 @@ public class AccountController extends Controller {
         session("password", account.getPassword());
         session("accountType", account.getType().toString());
 
-        return ok(index.render());
+        return applicationController.index();
     }
 
     public Result register() {
@@ -72,12 +73,12 @@ public class AccountController extends Controller {
         session("email", account.getEmail());
         session("password", account.getPassword());
         session("accountType", account.getType().toString());
-        return ok(index.render());
+        return applicationController.index();
     }
 
     public Result logOut() {
         session().clear();
-        return ok(index.render());
+        return applicationController.index();
     }
 
     public Result changeName() {
@@ -129,7 +130,7 @@ public class AccountController extends Controller {
 
     public Result deactivate() {
         if (session("email") == null) {
-            ok(index.render());
+            return applicationController.index();
         }
 
         String email = session("email");
@@ -138,12 +139,12 @@ public class AccountController extends Controller {
         accountService.deactivate(email, password);
 
         session().clear();
-        return ok(index.render());
+        return applicationController.index();
     }
 
     public Result remove(String id) {
         if (session("accountType").equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
+            return applicationController.index();
         }
 
         AccountService accountService = ServiceFactory.getInstance().getAccountService();

@@ -21,6 +21,7 @@ import services.order.OrderService;
 import services.paginator.Paginator;
 
 import javax.inject.Inject;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class CartController extends Controller {
@@ -41,7 +42,7 @@ public class CartController extends Controller {
      */
     public Result display(int currentPage) {
         String cartLength = session("cartLength");
-        if (cartLength == null) { return ok(views.html.cart.display.render(null, null, null, -1, -1)); }
+        if (cartLength == null) { return ok(views.html.cart.display.render(new HashMap<Object, Book>(), null, null, -1, -1)); }
         int cartLengthNumber = Integer.parseInt(cartLength);
 
         Map<Integer, Book> books = new LinkedHashMap<>();
@@ -159,14 +160,14 @@ public class CartController extends Controller {
         String userId = session("email");
         String userName = orderForm.get().getName();
         String userSurname = orderForm.get().getSurname();
-        String currentDate = new Date().toString();
+        String currentDate = new SimpleDateFormat("dd/MM/yyy").format(new Date());
         String address = orderForm.get().getAddress();
         String phone = orderForm.get().getPhone();
         int zip = orderForm.get().getZip();
 
         StringBuilder booksBuilder = new StringBuilder();
         String cartLength = session("cartLength");
-        if (cartLength == null) { return ok(views.html.cart.display.render(null, null, null, -1, -1)); }
+        if (cartLength == null) { return ok(views.html.cart.display.render(new HashMap<Object, Book>(), null, null, -1, -1)); }
         int cartLengthNumber = Integer.parseInt(cartLength);
         for (int i = 0; i < cartLengthNumber; i++) {
             String currentCartItem = session("cartItem" + i);

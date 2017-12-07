@@ -14,7 +14,6 @@ import services.author.AuthorService;
 import services.book.BookService;
 import services.category.CategoryService;
 import services.paginator.Paginator;
-import views.html.index;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -25,7 +24,8 @@ public class BookController extends Controller {
     private static final int BOOK_PER_PAGE = 10;
 
     public Result update(int id) {
-        if (!isAccountHasAccess()) { return ok(index.render()); }
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         BookService bookService = ServiceFactory.getInstance().getBookService();
         Book book = bookService.get(id);
@@ -69,7 +69,8 @@ public class BookController extends Controller {
     }
 
     public Result delete(int id) {
-        if (!isAccountHasAccess()) { return ok(index.render()); }
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         BookService bookService = ServiceFactory.getInstance().getBookService();
         Book book = bookService.get(id);
@@ -94,7 +95,8 @@ public class BookController extends Controller {
     }
 
     public Result edit(int id) {
-        if (!isAccountHasAccess()) { return ok(index.render()); }
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         Form<Book> bookForm = formFactory.form(Book.class);
         BookService bookService = ServiceFactory.getInstance().getBookService();
@@ -111,7 +113,8 @@ public class BookController extends Controller {
     }
 
     public Result books(int currentPage) {
-        if (!isAccountHasAccess()) { return ok(index.render()); }
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         BookService bookService = ServiceFactory.getInstance().getBookService();
         List<Book> books = bookService.getBooks();
@@ -133,7 +136,8 @@ public class BookController extends Controller {
     }
 
     public Result create() {
-        if (!isAccountHasAccess()) { return ok(index.render()); }
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
 
@@ -147,7 +151,8 @@ public class BookController extends Controller {
     }
 
     public Result save() {
-        if (!isAccountHasAccess()) { return ok(index.render()); }
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         Form<Book> bookForm = formFactory.form(Book.class).bindFromRequest();
         BookService bookService = ServiceFactory.getInstance().getBookService();

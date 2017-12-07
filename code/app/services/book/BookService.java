@@ -10,6 +10,7 @@ public interface BookService {
     Book get(int bookId);
     List<Book> getBooks();
     int getBooksCount();
+    List<Book> getSliderBooks();
 
     Book updateBook(Book book);
     void deleteBook(Book book);

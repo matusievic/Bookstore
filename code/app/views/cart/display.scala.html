@@ -24,7 +24,7 @@
                             val descr = b.getDescription
                             if(descr.length > 50) descr.substring(0, 50) + "..." else descr
                         }</p>
-                        <p><a href="@routes.CartController.delete(i)">delete</a></p>
+                        <p><a class="btn btn-danger" href="@routes.CartController.delete(i)">Delete</a></p>
                     </div>
                 </div>
                 <br>
@@ -59,8 +59,8 @@
             </ul>
             @if(books.nonEmpty) {
                 <h1>Total price: @books.values.foldLeft(0d)((res, b) => res + b.getPrice) $</h1>
-                <a href="@routes.CartController.order">BookOrder</a>
-                <a href="@routes.CartController.clear">Clear</a>
+                <a class="btn btn-success" href="@routes.CartController.order">Order</a>
+                <a class="btn btn-danger" href="@routes.CartController.clear">Clear</a>
             } else {
                 <h1>Your cart is empty!</h1>
             }

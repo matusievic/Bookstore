@@ -5,6 +5,7 @@ import entities.account.Account;
 import entities.account.AccountType;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MySQLAccountDAO implements AccountDAO {
     @Override
@@ -39,6 +40,12 @@ public class MySQLAccountDAO implements AccountDAO {
     @Override
     public Account getAccount(String email) {
         return Account.find.byId(email);
+    }
+
+    @Override
+    public List<Account> getAccounts() {
+        List<Account> accounts = Account.find.all().stream().filter(a -> a.getType() != AccountType.ADMIN).collect(Collectors.toList());
+        return accounts;
     }
 
     @Override

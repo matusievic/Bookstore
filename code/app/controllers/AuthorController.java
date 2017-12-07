@@ -7,22 +7,24 @@ import play.data.FormFactory;
 import play.mvc.Result;
 import services.ServiceFactory;
 import services.author.AuthorService;
-import views.html.index;
 
 import javax.inject.Inject;
 import java.util.List;
 
+import static play.mvc.Controller.request;
 import static play.mvc.Controller.session;
 import static play.mvc.Results.ok;
+import static play.mvc.Results.redirect;
 
 public class AuthorController {
     @Inject
     private FormFactory formFactory;
 
     public Result update(int id) {
+        String previousPage = request().getHeaders().get("referer").orElse("/");
         String accountType = session("accountType");
         if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
+            return redirect(previousPage);
         }
 
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
@@ -45,9 +47,10 @@ public class AuthorController {
     }
 
     public Result delete(int id) {
+        String previousPage = request().getHeaders().get("referer").orElse("/");
         String accountType = session("accountType");
         if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
+            return redirect(previousPage);
         }
 
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
@@ -60,9 +63,10 @@ public class AuthorController {
     }
 
     public Result edit(int id) {
+        String previousPage = request().getHeaders().get("referer").orElse("/");
         String accountType = session("accountType");
         if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
+            return redirect(previousPage);
         }
 
         Form<Author> authorForm = formFactory.form(Author.class);
@@ -74,9 +78,10 @@ public class AuthorController {
     }
 
     public Result authors() {
+        String previousPage = request().getHeaders().get("referer").orElse("/");
         String accountType = session("accountType");
         if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
+            return redirect(previousPage);
         }
 
         AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
@@ -87,9 +92,10 @@ public class AuthorController {
     }
 
     public Result create() {
+        String previousPage = request().getHeaders().get("referer").orElse("/");
         String accountType = session("accountType");
         if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
+            return redirect(previousPage);
         }
 
         Form<Author> authorForm = formFactory.form(Author.class).bindFromRequest();
@@ -97,9 +103,10 @@ public class AuthorController {
     }
 
     public Result save() {
+        String previousPage = request().getHeaders().get("referer").orElse("/");
         String accountType = session("accountType");
         if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
-            return ok(index.render());
+            return redirect(previousPage);
         }
 
         Form<Author> authorForm = formFactory.form(Author.class).bindFromRequest();

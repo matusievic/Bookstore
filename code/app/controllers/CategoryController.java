@@ -8,7 +8,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import services.ServiceFactory;
 import services.category.CategoryService;
-import views.html.index;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -18,7 +17,8 @@ public class CategoryController extends Controller {
     private FormFactory formFactory;
 
     public Result update(int id) {
-        if (!isAccountHasAccess()) return ok(index.render());
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
         Category category = categoryService.get(id);
@@ -43,7 +43,8 @@ public class CategoryController extends Controller {
     }
 
     public Result delete(int id) {
-        if (!isAccountHasAccess()) return ok(index.render());
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
         Category category = categoryService.get(id);
@@ -55,7 +56,8 @@ public class CategoryController extends Controller {
     }
 
     public Result edit(int id) {
-        if (!isAccountHasAccess()) return ok(index.render());
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         Form<Category> categoryForm = formFactory.form(Category.class);
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
@@ -66,7 +68,8 @@ public class CategoryController extends Controller {
     }
 
     public Result categories() {
-        if (!isAccountHasAccess()) return ok(index.render());
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
         List<Category> categories = categoryService.getCategories();
@@ -76,14 +79,16 @@ public class CategoryController extends Controller {
     }
 
     public Result create() {
-        if (!isAccountHasAccess()) return ok(index.render());
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         Form<Category> categoryForm = formFactory.form(Category.class).bindFromRequest();
         return ok(views.html.category.create.render(categoryForm));
     }
 
     public Result save() {
-        if (!isAccountHasAccess()) return ok(index.render());
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        if (!isAccountHasAccess()) { return redirect(previousPage); }
 
         Form<Category> categoryForm = formFactory.form(Category.class).bindFromRequest();
         CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();

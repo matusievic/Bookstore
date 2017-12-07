@@ -34,8 +34,8 @@
                 }</p>
                 <p>
                 @if(session().get("accountType") == AccountType.ADMIN.toString) {
-                    <a href="@routes.BookController.edit(b.getId)">edit</a>
-                    <a href="@routes.BookController.delete(b.getId)">delete</a>
+                    <a class="btn btn-primary" href="@routes.BookController.edit(b.getId)">Edit</a>
+                    <a class="btn btn-danger" href="@routes.BookController.delete(b.getId)">Delete</a>
                 }
                 </p>
             </div>

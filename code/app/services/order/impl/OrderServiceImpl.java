@@ -33,6 +33,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<BookOrder> get() {
+        return orderDAO.read();
+    }
+
+    @Override
     public List<BookOrder> get(String email) {
         return orderDAO.read(email);
     }

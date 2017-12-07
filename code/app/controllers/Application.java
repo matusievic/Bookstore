@@ -15,11 +15,14 @@ import services.ServiceFactory;
 import services.author.AuthorService;
 import services.book.BookService;
 import services.category.CategoryService;
+import services.order.OrderService;
 import services.paginator.Paginator;
 import views.html.*;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -27,9 +30,15 @@ public class Application extends Controller {
     @Inject
     private FormFactory formFactory;
     private static final int BOOK_PER_PAGE = 10;
+    private static final AccountService accountService = ServiceFactory.getInstance().getAccountService();
+    private static final OrderService orderService = ServiceFactory.getInstance().getOrderService();
+    private static final BookService bookService = ServiceFactory.getInstance().getBookService();
+    private static final AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
 
     public Result index() {
-        return ok(index.render());
+        List<Book> books = bookService.getSliderBooks();
+        List<Author> authors = authorService.getAuthors();
+        return ok(index.render(books, authors));
     }
 
     public Result catalog(int authorId, int categoryId, int currentPage) {
@@ -61,17 +70,23 @@ public class Application extends Controller {
     }
 
     public Result help() {
-        return TODO;
+        return ok(views.html.help.render());
     }
 
     public Result orders() {
-        return TODO;
+        String previousPage = request().getHeaders().get("referer").orElse("/");
+        String accountType = session("accountType");
+        if (accountType == null || !accountType.equals(AccountType.ADMIN.toString())) {
+            return redirect(previousPage);
+        }
+
+        List<Account> accounts = accountService.getAccounts();
+        List<BookOrder> orders = orderService.get();
+        return ok(views.html.admin.orders.render(orders, accounts));
     }
 
     public Result accounts() {
-        AccountService accountService = ServiceFactory.getInstance().getAccountService();
-        List<Account> accounts = Account.find.all().stream().filter(a -> a.getType() != AccountType.ADMIN).collect(Collectors.toList());
-
+        List<Account> accounts = accountService.getAccounts();
         return ok(views.html.admin.accounts.render(accounts));
     }
 
@@ -81,7 +96,7 @@ public class Application extends Controller {
 
     public Result account() {
         if (!session().containsKey("email")) {
-            return ok(index.render());
+            return index();
         }
 
         AccountService accountService = ServiceFactory.getInstance().getAccountService();

@@ -5,10 +5,10 @@
 @main("Categories - Bookstore") {
     @for(c <- categories) {
         <h2>@c.getName</h2>
-        <a href="@routes.CategoryController.edit(c.getId)">edit</a>
-        <a href="@routes.CategoryController.delete(c.getId)">delete</a>
+        <a class="btn btn-primary" href="@routes.CategoryController.edit(c.getId)">Edit</a>
+        <a class="btn btn-danger" href="@routes.CategoryController.delete(c.getId)">Delete</a>
         <br>
     }
 
-    <a href="@routes.CategoryController.create">create</a>
+    <a class="btn btn-success" href="@routes.CategoryController.create">Create</a>
 }

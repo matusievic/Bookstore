@@ -5,7 +5,9 @@ import dao.book.BookDAO;
 import entities.book.Book;
 import services.book.BookService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BookServiceImpl implements BookService {
     private BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
@@ -41,6 +43,17 @@ public class BookServiceImpl implements BookService {
     @Override
     public int getBooksCount() {
         return bookDAO.getBooks().size();
+    }
+
+    @Override
+    public List<Book> getSliderBooks() {
+        List<Book> books = bookDAO.getBooks();
+        Random r = new Random();
+        List<Book> sliderBook = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            sliderBook.add(books.get(r.nextInt(books.size())));
+        }
+        return sliderBook;
     }
 
     @Override

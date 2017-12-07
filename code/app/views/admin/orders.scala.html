@@ -6,19 +6,22 @@
 @main("Orders - Bookstore") {
     <table>
         <tr>
+            <td>Id</td>
             <td>User</td>
             <td>Date</td>
             <td>Status</td>
             <td>More</td>
         </tr>
         @for(o <- orders) {
-            <td>@{
-                val a = accounts.find(a => a.getEmail == o.getAccountId)
-                if(a.isDefined) a.get.getEmail else "Unknown user"
-            }</td>
-            <td>@o.getDate</td>
-            <td>@o.getStatus</td>
-            <td><a href=""</td>
+            <tr>
+                <td><a href="@routes.OrderController.edit(o.getId)">Id</a></td>
+                <td>@{
+                    val a = accounts.find(a => a.getEmail == o.getAccountId)
+                    if(a.isDefined) a.get.getEmail else "Unknown user"
+                }</td>
+                <td>@o.getDate</td>
+                <td>@o.getStatus</td>
+            </tr>
         }
     </table>
 }

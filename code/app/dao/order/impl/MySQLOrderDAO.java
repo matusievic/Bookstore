@@ -32,6 +32,11 @@ public class MySQLOrderDAO implements OrderDAO {
     }
 
     @Override
+    public List<BookOrder> read() {
+        return BookOrder.find.all();
+    }
+
+    @Override
     public BookOrder update(BookOrder order) {
         order.update();
         return order;

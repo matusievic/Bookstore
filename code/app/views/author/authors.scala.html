@@ -5,10 +5,10 @@
 @main("Authors - Bookstore") {
     @for(a <- authors) {
         <h2>@{a.getName + ' ' + a.getSurname}</h2>
-        <a href="@routes.AuthorController.edit(a.getId)">edit</a>
-        <a href="@routes.AuthorController.delete(a.getId)">delete</a>
+        <a class="btn btn-primary" href="@routes.AuthorController.edit(a.getId)">Edit</a>
+        <a class="btn btn-danger" href="@routes.AuthorController.delete(a.getId)">Delete</a>
         <br>
     }
 
-    <a href="@routes.AuthorController.create">create</a>
+    <a class="btn btn-success" href="@routes.AuthorController.create">Create</a>
 }

@@ -1,0 +1,77 @@
+@import entities.order.BookOrder
+@import entities.order.OrderStatus
+
+@(order: BookOrder, form: Form[BookOrder])
+
+@main("Order details - Bookstore") {
+    <div class="media">
+        <div class="media-left">
+            <table>
+                <caption>Order # @order.getId</caption>
+                <tbody>
+                    <tr>
+                        <td>Name:</td>
+                        <td>@order.getName</td>
+                    </tr>
+                    <tr>
+                        <td>Surname:</td>
+                        <td>@order.getSurname</td>
+                    </tr>
+                    <tr>
+                        <td>Date:</td>
+                        <td>@order.getDate</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>@order.getAddress</td>
+                    </tr>
+                    <tr>
+                        <td>ZIP:</td>
+                        <td>@order.getZip</td>
+                    </tr>
+                    <tr>
+                        <td>Phone:</td>
+                        <td>@order.getPhone</td>
+                    </tr>
+                    <tr>
+                        <td>Books:</td>
+                        <td>
+                        @for(b <- order.getBooks.split(';')) {
+                            <a href="@routes.BookController.get(b.toInt)">@b</a>
+                        }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @helper.form(action = helper.CSRF(routes.OrderController.update(order.getId))) {
+                <form class="form-group">
+                    <h2 class="text-center">Accept order</h2>
+                    <br>
+                    @if(form.hasGlobalErrors) {
+                        <p class="error">
+                        @form.getGlobalError.get.message
+                        </p>
+                    }
+
+                    <label for="inputStatus" class="sr-only">Status</label>
+                    <select name="status" id="inputStatus" class="form-control" required>
+                    @for(s <- OrderStatus.values()) {
+                        <option @if(s == order.getStatus) { selected="selected" } value="@s">@s.toString </option>
+                    }
+                    </select>
+                    <br>
+
+                    <label for="inputAnswer" class="sr-only">Answer</label>
+                    <input type="text" name="answer" id="inputAnswer" value="@order.getAnswer" class="form-control" placeholder="Answer" required>
+                    <br>
+
+                    <button class="btn btn-lg btn-success btn-block" name="activity" value="ok" type="submit">Save</button>
+                    <button class="btn btn-lg btn-default btn-block" name="activity" value="cancel" type="submit">Cancel</button>
+
+                </form>
+            }
+        </div>
+
+    </div>
+}
