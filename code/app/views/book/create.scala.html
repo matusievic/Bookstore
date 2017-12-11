@@ -4,55 +4,61 @@
 
 @(form: Form[Book], authors: List[Author], categories: List[Category])
 
-@main("Create edit - Bookstore") {
-    @helper.form(action = helper.CSRF(routes.BookController.save())) {
-        <form class="form-group">
-            <h2 class="text-center">Create edit</h2>
-            <br>
-            @if(form.hasGlobalErrors) {
-                <p class="error">
-                @form.getGlobalError.get.message
-                </p>
+@main("Create book - Bookstore") {
+    @header("Create book")
+    <div class="container">
+        <div class="row centered">
+            <div class="col-lg-8 col-lg-offset-2">
+            @helper.form(action = helper.CSRF(routes.BookController.save())) {
+                <form class="form-group">
+                    <br>
+                    @if(form.hasGlobalErrors) {
+                        <p class="error">
+                        @form.getGlobalError.get.message
+                        </p>
+                    }
+
+                    <label for="inputName" class="sr-only">Name</label>
+                    <input type="text" name="name" id="inputName" class="form-control" placeholder="Book name" required autofocus>
+                    <br>
+
+                    <label for="inputImageURL" class="sr-only">Image</label>
+                    <input type="text" name="imageURL" id="inputImageURL" class="form-control" placeholder="Book image URL" required>
+                    <br>
+
+                    <label for="inputAuthorId" class="sr-only">Author</label>
+                    <select name="authorId" id="inputAuthorId" class="form-control" required>
+                    @for(a <- authors) {
+                        <option value="@a.getId">@{a.getName + ' ' + a.getSurname} </option>
+                    }
+                    </select>
+                    <br>
+
+                    <label for="inputCategoryId" class="sr-only">Category</label>
+                    <select name="categoryId" id="inputCategoryId" class="form-control" required>
+                    @for(c <- categories) {
+                        <option value="@c.getId">@c.getName</option>
+                    }
+                    </select>
+                    <br>
+
+                    <label for="inputPrice" class="sr-only">Price</label>
+                    <input type="text" name="price" id="inputPrice" class="form-control" placeholder="Book price" required>
+                    <br>
+
+                    <label for="inputPageCount" class="sr-only">Page count</label>
+                    <input type="text" name="pageCount" id="inputPageCount" class="form-control" placeholder="Page count" required>
+                    <br>
+
+                    <label for="inputDescription" class="sr-only">Description</label>
+                    <textarea name="description" id="inputDescription" class="form-control" placeholder="Book description" required></textarea>
+                    <br>
+
+                    <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
+
+                </form>
             }
-
-            <label for="inputName" class="sr-only">Name</label>
-            <input type="text" name="name" id="inputName" class="form-control" placeholder="Book name" required autofocus>
-            <br>
-
-            <label for="inputImageURL" class="sr-only">Image</label>
-            <input type="text" name="imageURL" id="inputImageURL" class="form-control" placeholder="Book image URL" required>
-            <br>
-
-            <label for="inputAuthorId" class="sr-only">Author</label>
-            <select name="authorId" id="inputAuthorId" class="form-control" required>
-            @for(a <- authors) {
-                <option value="@a.getId">@{a.getName + ' ' + a.getSurname} </option>
-            }
-            </select>
-            <br>
-
-            <label for="inputCategoryId" class="sr-only">Category</label>
-            <select name="categoryId" id="inputCategoryId" class="form-control" required>
-            @for(c <- categories) {
-                <option value="@c.getId">@c.getName</option>
-            }
-            </select>
-            <br>
-
-            <label for="inputPrice" class="sr-only">Price</label>
-            <input type="text" name="price" id="inputPrice" class="form-control" placeholder="Book price" required>
-            <br>
-
-            <label for="inputPageCount" class="sr-only">Page count</label>
-            <input type="text" name="pageCount" id="inputPageCount" class="form-control" placeholder="Page count" required>
-            <br>
-
-            <label for="inputDescription" class="sr-only">Description</label>
-            <textarea name="description" id="inputDescription" class="form-control" placeholder="Book description" required></textarea>
-            <br>
-
-            <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
-
-        </form>
-    }
+            </div>
+        </div>
+    </div>
 }

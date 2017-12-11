@@ -3,12 +3,19 @@
 @(categories: List[Category])
 
 @main("Categories - Bookstore") {
-    @for(c <- categories) {
-        <h2>@c.getName</h2>
-        <a class="btn btn-primary" href="@routes.CategoryController.edit(c.getId)">Edit</a>
-        <a class="btn btn-danger" href="@routes.CategoryController.delete(c.getId)">Delete</a>
-        <br>
-    }
-
-    <a class="btn btn-success" href="@routes.CategoryController.create">Create</a>
+    @header("Edit categories")
+    <div class="container">
+        <div class="row centered">
+            <div class="col-lg-8 col-lg-offset-2">
+                @for(c <- categories) {
+                    <h2>@c.getName</h2>
+                    <a class="btn btn-primary" href="@routes.CategoryController.edit(c.getId)">Edit</a>
+                    <a class="btn btn-danger" href="@routes.CategoryController.delete(c.getId)">Delete</a>
+                    <br>
+                }
+                <br>
+                <a class="btn btn-success" href="@routes.CategoryController.create">Create</a>
+            </div>
+        </div>
+    </div>
 }

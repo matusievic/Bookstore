@@ -5,13 +5,16 @@
 @(books: Map[Int, Book], categories: List[Category], authors: List[Author], currentPage: Int, pageCount: Int)
 
 @main("Cart - Bookstore") {
-    <div class="row">
-        <div class="col-md-8">
-            @*Cart content*@
-            <div class="media">
-            @for((i, b) <- books) {
-                <div class="media-left">
-                    <img class="media-object" src="@routes.Assets.at(b.getImageURL)" alt="Book">
+    @header("Cart")
+    <div class="container">
+        <div class="row centered">
+            <div class="col-lg-8 col-lg-offset-3">
+                @*Cart content*@
+                <div class="media">
+                @for((i, b) <- books) {
+                    <div class="media-left">
+                        <img class="media-object" src="@routes.Assets.at(b.getImageURL)" alt="Book">
+                    </div>
                     <div class="media-body">
                         <h3 class="media-heading">@{
                             val a = authors.find(a => a.getId == b.getAuthorId)
@@ -26,45 +29,44 @@
                         }</p>
                         <p><a class="btn btn-danger" href="@routes.CartController.delete(i)">Delete</a></p>
                     </div>
+                    <br>
+                    <br>
+                    }
                 </div>
-                <br>
-                <br>
+
+                @*Pagination*@
+                <ul class="pagination">
+                    @if(currentPage > 1) {
+                        <li>
+                            <a href="@routes.CartController.display(currentPage - 1)" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    }
+                    @for(p <- 1 to pageCount) {
+                        <li class="@{
+                            if(p == currentPage) "active"
+                        }"><a href="@routes.CartController.display(p)"> @p @if(p == currentPage) {
+                            <span class="sr-only">(current)</span>
+                        }</a>
+                        </li>
+                    }
+                    @if(currentPage < pageCount) {
+                        <li>
+                            <a href="@routes.CartController.display(currentPage + 1)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                @if(books.nonEmpty) {
+                    <h1>Total price: @books.values.foldLeft(0d)((res, b) => res + b.getPrice) $</h1>
+                    <a class="btn btn-success" href="@routes.CartController.order">Order</a>
+                    <a class="btn btn-danger" href="@routes.CartController.clear">Clear</a>
+                } else {
+                    <h1>Your cart is empty!</h1>
                 }
             </div>
-
-            @*Pagination*@
-            <ul class="pagination">
-                @if(currentPage > 1) {
-                    <li>
-                        <a href="@routes.CartController.display(currentPage - 1)" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                }
-                @for(p <- 1 to pageCount) {
-                    <li class="@{
-                        if(p == currentPage) "active"
-                    }"><a href="@routes.CartController.display(p)"> @p @if(p == currentPage) {
-                        <span class="sr-only">(current)</span>
-                    }</a>
-                    </li>
-                }
-                @if(currentPage < pageCount) {
-                    <li>
-                        <a href="@routes.CartController.display(currentPage + 1)" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                }
-            </ul>
-            @if(books.nonEmpty) {
-                <h1>Total price: @books.values.foldLeft(0d)((res, b) => res + b.getPrice) $</h1>
-                <a class="btn btn-success" href="@routes.CartController.order">Order</a>
-                <a class="btn btn-danger" href="@routes.CartController.clear">Clear</a>
-            } else {
-                <h1>Your cart is empty!</h1>
-            }
-
         </div>
     </div>
 }

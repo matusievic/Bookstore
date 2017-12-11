@@ -3,12 +3,19 @@
 @(authors: List[Author])
 
 @main("Authors - Bookstore") {
-    @for(a <- authors) {
-        <h2>@{a.getName + ' ' + a.getSurname}</h2>
-        <a class="btn btn-primary" href="@routes.AuthorController.edit(a.getId)">Edit</a>
-        <a class="btn btn-danger" href="@routes.AuthorController.delete(a.getId)">Delete</a>
-        <br>
-    }
-
-    <a class="btn btn-success" href="@routes.AuthorController.create">Create</a>
+    @header("Edit authors")
+    <div class="container">
+        <div class="row centered">
+            <div class="col-lg-8 col-lg-offset-2">
+                @for(a <- authors) {
+                    <h2>@{a.getName + ' ' + a.getSurname}</h2>
+                    <a class="btn btn-primary" href="@routes.AuthorController.edit(a.getId)">Edit</a>
+                    <a class="btn btn-danger" href="@routes.AuthorController.delete(a.getId)">Delete</a>
+                    <br>
+                }
+                <br>
+                <a class="btn btn-success" href="@routes.AuthorController.create">Create</a>
+            </div>
+        </div>
+    </div>
 }

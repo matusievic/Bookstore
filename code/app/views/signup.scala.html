@@ -1,6 +1,7 @@
 @(form: play.data.Form[AccountController.SignupForm])
 
 @main("Sign Up - Bookstore") {
+    @header("Create an account")
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
         @helper.form(action = helper.CSRF(routes.AccountController.register)) {

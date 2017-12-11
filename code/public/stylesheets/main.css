@@ -1,0 +1,128 @@
+#headerwrap {
+    background: url("../images/about/header.jpg") no-repeat center top;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    text-align: center;
+    background-attachment: relative;
+    background-position: center center;
+    min-height: 300px;
+    width: 100%;
+
+    background-size: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#headerwrap h1 {
+    margin-top: 80px;
+    color: white;
+    font-size: 70px;
+    font-weight: bolder;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+#headerwrap h2 {
+    color: white;
+    font-size: 30px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+#footer {
+    margin-top: 20px;
+    background: #696969;
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+#footer p {
+    font-size: 20px;
+    color: white;
+    text-align: center;
+}
+.conwhite {
+    background: #e0e0e0;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    overflow: auto;
+}
+
+.conwhite h4 {
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.conwhite p {
+    font-size: 20px;
+    padding-bottom: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.conwhite p img {
+    max-width: 400px;
+    max-height: 400px;
+    float: left;
+    display: inline-block;
+    padding-right: 25px;
+}
+
+.conwhite p a {
+    color: #696969;
+    text-decoration: none;
+}
+
+.conwhite p a:hover {
+    color: #696969;
+    text-decoration: underline;
+}
+
+.concyan {
+    background: #00a48e;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    overflow: auto;
+}
+
+.concyan h4 {
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+}
+
+.concyan p {
+    font-size: 20px;
+    padding-bottom: 20px;
+    color: white;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.concyan p img {
+    max-width: 400px;
+    max-height: 400px;
+    float: left;
+    display: inline-block;
+    padding-right: 25px;
+}
+
+.concyan p a {
+    color: white;
+    text-decoration: none;
+}
+
+.concyan p a:hover {
+    color: white;
+    text-decoration: underline;
+}

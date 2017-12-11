@@ -21,6 +21,7 @@ import views.html.*;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
@@ -38,7 +39,9 @@ public class Application extends Controller {
     public Result index() {
         List<Book> books = bookService.getSliderBooks();
         List<Author> authors = authorService.getAuthors();
-        return ok(index.render(books, authors));
+        Book newBook = bookService.getBooks().stream().max(Comparator.comparing(Book::getId)).orElse(new Book());
+        Book cheapestBook = bookService.getBooks().stream().min(Comparator.comparing(Book::getPrice)).orElse(new Book());
+        return ok(index.render(books, authors, newBook, cheapestBook));
     }
 
     public Result catalog(int authorId, int categoryId, int currentPage) {
@@ -66,7 +69,7 @@ public class Application extends Controller {
 
         books = Paginator.paginate(pagination);
 
-        return ok(views.html.book.books.render(books, categories, authors, currentPage, pagination.getPageCount(), authorId, categoryId));
+        return ok(views.html.catalog.render(categories, categoryId, authors, authorId, books, currentPage, pagination.getPageCount()));
     }
 
     public Result help() {
@@ -91,7 +94,7 @@ public class Application extends Controller {
     }
 
     public Result about() {
-        return TODO;
+        return ok(views.html.about.render());
     }
 
     public Result account() {

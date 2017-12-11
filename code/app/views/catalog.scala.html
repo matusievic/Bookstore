@@ -1,28 +1,52 @@
 @import entities.category.Category
 @import entities.author.Author
 @import entities.account.AccountType
+@import entities.book.Book
 
-@(title: String, categoryList: List[Category], authorList: List[Author])(bookContent: Html)
+@(categoryList: List[Category], categoryId: Int, authorList: List[Author], authorId: Int, bookList: List[Book], currentPage: Int, pageCount: Int)
 
-@main(title) {
+@main("Catalog - Bookstore") {
+    @{
+        def mkData() = {
+            val a = authorList.find(a => a.getId == authorId).getOrElse(new Author)
+            val c = categoryList.find(c => c.getId == categoryId).getOrElse(new Category())
+            if(authorId != -1) Tuple2(a.getName + ' ' + a.getSurname, a.getDescription) else if(categoryId != -1) Tuple2(c.getName, "") else Tuple2("Catalog", "")
+        }
+
+        val data = mkData()
+        header(data._1, data._2)
+    }
+    @*RIGHT PANEL*@
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3 col-md-offset-1">
+            <h2>Categories</h2>
+            <ul class="nav nav-pills nav-stacked">
             @for(c <- categoryList) {
-                <ul class="nav nav-pills nav-stacked"><a href="@routes.Application.catalog(-1, c.getId)">@c.getName</a></ul>
+                <li role="presentation" @if(c.getId == categoryId) {
+                    class="active"}><a href="@routes.Application.catalog(-1, c.getId)">@c.getName</a></li>
             }
+            </ul>
             @if(session().get("accountType") == AccountType.ADMIN.toString) {
                 <a class="btn btn-success" href="@routes.CategoryController.categories">Edit categories</a>
             }
+            <h2>Authors</h2>
+            <ul class="nav nav-pills nav-stacked">
             @for(a <- authorList) {
-                <ul class="nav nav-pills nav-stacked"><a href="@routes.Application.catalog(a.getId, -1)">@{a.getName + " " + a.getSurname}</a></ul>
+                <li role="presentation" @if(a.getId == authorId) {
+                    class="active"}><a href="@routes.Application.catalog(a.getId, -1)">@{
+                    a.getName + " " + a.getSurname
+                }</a>
+                </li>
+            </ul>
             }
             @if(session().get("accountType") == AccountType.ADMIN.toString) {
                 <a class="btn btn-success" href="@routes.AuthorController.authors">Edit authors</a>
             }
         </div>
 
+        @*BOOKS*@
         <div class="col-md-8">
-        @bookContent
+        @book.books(bookList, categoryList, categoryId, authorList, authorId, currentPage, pageCount)
         </div>
     </div>
 }

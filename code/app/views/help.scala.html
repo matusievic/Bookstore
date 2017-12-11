@@ -1,74 +1,80 @@
 @()
 
 @main("Help - Bookstore") {
-    <div id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="card">
-            <div class="card-header" role="tab" id="headingOne">
-                <h5 class="mb-0">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        How can I order books?
-                    </a>
-                </h5>
-            </div>
+    @header("FAQ")
+    <div class="container">
+        <div class="row">
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingOne">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                How can I order books?
+                            </a>
+                        </h5>
+                    </div>
 
-            <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                <div class="card-block">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="card-block">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingTwo">
+                        <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                How can I cancel an order?
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="card-block">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingThree">
+                        <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Why my order isn't approved?
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="card-block">
+                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingFour">
+                        <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                                How can I pay?
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+                        <div class="card-block">
+                            Quisque congue enim eget tincidunt porta. Nunc nisi velit, accumsan vehicula nunc non, facilisis eleifend turpis. Mauris eu mattis dui, sed laoreet risus. Suspendisse quis mollis metus, sed lobortis velit. Curabitur non purus id diam sodales fermentum. Integer sollicitudin cursus odio ut sodales. Integer fermentum tempor erat, ut tempus turpis efficitur sit amet. Maecenas sed arcu pellentesque, hendrerit arcu nec, gravida risus. Proin neque nisl, hendrerit sit amet bibendum sit amet, tincidunt quis turpis. Nulla fermentum turpis eu sem luctus porttitor. Sed sit amet dignissim odio, non vulputate nunc. Proin at feugiat sem.                 </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingFive">
+                        <h5 class="mb-0">
+                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
+                                Can I return books?
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+                        <div class="card-block">
+                            Integer vel sem feugiat, interdum massa et, porttitor nulla. Morbi vel viverra ipsum. Fusce velit nisl, viverra cursus lacinia id, aliquet vitae neque. Mauris et viverra ante, et interdum urna. In pharetra pharetra nibh sed tincidunt. Pellentesque auctor massa vel arcu molestie, quis facilisis nisi convallis. Phasellus ut turpis eget enim mollis laoreet. Donec ultrices dictum congue. Aenean vitae ligula enim. Praesent tincidunt fermentum odio, ut posuere turpis semper eu. In faucibus, elit sed consectetur consectetur, leo ligula venenatis dui, eget egestas nulla lacus eget mauris. Nulla facilisi. Suspendisse sit amet ligula id diam luctus gravida nec et purus. Quisque venenatis cursus nunc, quis auctor mi finibus ut.             </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <div class="card-header" role="tab" id="headingTwo">
-                <h5 class="mb-0">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        How can I cancel an order?
-                    </a>
-                </h5>
-            </div>
-            <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="card-block">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" role="tab" id="headingThree">
-                <h5 class="mb-0">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Why my order isn't approved?
-                    </a>
-                </h5>
-            </div>
-            <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-                <div class="card-block">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" role="tab" id="headingFour">
-                <h5 class="mb-0">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
-                        How can I pay?
-                    </a>
-                </h5>
-            </div>
-            <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
-                <div class="card-block">
-            Quisque congue enim eget tincidunt porta. Nunc nisi velit, accumsan vehicula nunc non, facilisis eleifend turpis. Mauris eu mattis dui, sed laoreet risus. Suspendisse quis mollis metus, sed lobortis velit. Curabitur non purus id diam sodales fermentum. Integer sollicitudin cursus odio ut sodales. Integer fermentum tempor erat, ut tempus turpis efficitur sit amet. Maecenas sed arcu pellentesque, hendrerit arcu nec, gravida risus. Proin neque nisl, hendrerit sit amet bibendum sit amet, tincidunt quis turpis. Nulla fermentum turpis eu sem luctus porttitor. Sed sit amet dignissim odio, non vulputate nunc. Proin at feugiat sem.                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" role="tab" id="headingFive">
-                <h5 class="mb-0">
-                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
-                        Can I return books?
-                    </a>
-                </h5>
-            </div>
-            <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFour">
-                <div class="card-block">
-                    Integer vel sem feugiat, interdum massa et, porttitor nulla. Morbi vel viverra ipsum. Fusce velit nisl, viverra cursus lacinia id, aliquet vitae neque. Mauris et viverra ante, et interdum urna. In pharetra pharetra nibh sed tincidunt. Pellentesque auctor massa vel arcu molestie, quis facilisis nisi convallis. Phasellus ut turpis eget enim mollis laoreet. Donec ultrices dictum congue. Aenean vitae ligula enim. Praesent tincidunt fermentum odio, ut posuere turpis semper eu. In faucibus, elit sed consectetur consectetur, leo ligula venenatis dui, eget egestas nulla lacus eget mauris. Nulla facilisi. Suspendisse sit amet ligula id diam luctus gravida nec et purus. Quisque venenatis cursus nunc, quis auctor mi finibus ut.             </div>
         </div>
     </div>
 }

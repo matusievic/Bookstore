@@ -5,6 +5,7 @@
 <html>
     <head>
         <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-theme.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/carousel.css")">
@@ -14,7 +15,14 @@
         <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
     </head>
     <body>
-		@menu()
+        @menu()
         @content
+    <div id="footer">
+        <div class="container">
+            <div class="row centered">
+                <p>©2017 Bookstore</p>
+            </div>
+        </div>
+    </div>
     </body>
 </html>

@@ -1,11 +1,10 @@
 @import entities.book.Book
 @import entities.author.Author
 
-@(sliderBooks: List[Book], authros: List[Author])
+@(sliderBooks: List[Book], authros: List[Author], newBook: Book, cheapestBook: Book)
 
 @main("Main - Bookstore") {
-    <!-- Carousel
-    ================================================== -->
+    @*Slider*@
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -15,23 +14,51 @@
         </ol>
         <div class="carousel-inner">
         @for(i <- sliderBooks.indices) {
-            <div class="item@if(i == 0){ active}">
-                @*<img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide">*@
-            <div class="container">
-                <div class="carousel-caption">
-                    <h1>@sliderBooks(i).getName - @{
-                        val a = authros.find(a => a.getId == sliderBooks(i).getAuthorId).get
-                        a.getName + ' ' + a.getSurname
-                    }
-                    </h1>
-                    <p>@sliderBooks(i).getDescription</p>
-                    <p><a class="btn btn-lg btn-primary" href="@routes.BookController.get(sliderBooks(i).getId)" role="button">Learn more</a></p>
+            <div class="item@if(i == 0) { active}">
+                <img src="@routes.Assets.at("images/slide" + (i + 1) + ".jpg")" alt="First slide">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>@sliderBooks(i).getName - @{
+                            val a = authros.find(a => a.getId == sliderBooks(i).getAuthorId).get
+                            a.getName + ' ' + a.getSurname
+                        }
+                        </h1>
+                        <p>@sliderBooks(i).getDescription</p>
+                        <p><a class="btn btn-lg btn-primary" href="@routes.BookController.get(sliderBooks(i).getId)" role="button">Learn more</a></p>
+                    </div>
                 </div>
-            </div>
             </div>
         }
         </div>
         <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+    <div class="conwhite">
+        <h4>A new book</h4>
+        <p>
+            <img src="@routes.Assets.at(newBook.getImageURL)">
+            @newBook.getName by @{
+            val a = authros.find(a => a.getId == newBook.getAuthorId).getOrElse(new Author())
+            a.getName + ' ' + a.getSurname
+        }
+            <br><br>
+            @newBook.getDescription
+            <br><br>
+            <a href="@routes.BookController.get(newBook.getId)">Learn more</a>
+        </p>
+    </div>
+    <div class="concyan">
+        <h4>The cheapest book</h4>
+        <p>
+            <img src="@routes.Assets.at(cheapestBook.getImageURL)">
+            @cheapestBook.getName by @{
+            val a = authros.find(a => a.getId == cheapestBook.getAuthorId).getOrElse(new Author())
+            a.getName + ' ' + a.getSurname
+        }
+            <br><br>
+            @cheapestBook.getDescription
+            <br><br>
+            <a href="@routes.BookController.get(cheapestBook.getId)">Learn more</a>
+        </p>
     </div>
 }

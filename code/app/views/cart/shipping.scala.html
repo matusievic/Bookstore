@@ -3,53 +3,55 @@
 @(order: BookOrder)
 
 @main("Order details - Bookstore") {
-    <div class="media">
-        <div class="media-left">
-            <table>
-                <caption>Order #@order.getId</caption>
-                <tbody>
-                    <tr>
-                        <td>Name:</td>
-                        <td>@order.getName</td>
-                    </tr>
-                    <tr>
-                        <td>Surname:</td>
-                        <td>@order.getSurname</td>
-                    </tr>
-                    <tr>
-                        <td>Date:</td>
-                        <td>@order.getDate</td>
-                    </tr>
-                    <tr>
-                        <td>Address:</td>
-                        <td>@order.getAddress</td>
-                    </tr>
-                    <tr>
-                        <td>ZIP:</td>
-                        <td>@order.getZip</td>
-                    </tr>
-                    <tr>
-                        <td>Phone:</td>
-                        <td>@order.getPhone</td>
-                    </tr>
-                    <tr>
-                        <td>Books:</td>
-                        <td>
+    @header("Order #" + order.getId)
+    <div class="container">
+        <div class="row centered">
+            <div class="col-lg-8 col-lg-offset-2">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Name:</td>
+                            <td>@order.getName</td>
+                        </tr>
+                        <tr>
+                            <td>Surname:</td>
+                            <td>@order.getSurname</td>
+                        </tr>
+                        <tr>
+                            <td>Date:</td>
+                            <td>@order.getDate</td>
+                        </tr>
+                        <tr>
+                            <td>Address:</td>
+                            <td>@order.getAddress</td>
+                        </tr>
+                        <tr>
+                            <td>ZIP:</td>
+                            <td>@order.getZip</td>
+                        </tr>
+                        <tr>
+                            <td>Phone:</td>
+                            <td>@order.getPhone</td>
+                        </tr>
+                        <tr>
+                            <td>Books:</td>
+                            <td>
                             @for(b <- order.getBooks.split(';')) {
                                 <a href="@routes.BookController.get(b.toInt)">@b</a>
                             }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Status:</td>
-                        <td>@order.getStatus</td>
-                    </tr>
-                    <tr>
-                        <td>Answer:</td>
-                        <td>@order.getAnswer</td>
-                    </tr>
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Status:</td>
+                            <td>@order.getStatus</td>
+                        </tr>
+                        <tr>
+                            <td>Answer:</td>
+                            <td>@order.getAnswer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 }

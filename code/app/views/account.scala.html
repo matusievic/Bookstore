@@ -5,10 +5,10 @@
 @(account: Account, nameForm: Form[AccountController.NameForm], passwordForm: Form[AccountController.PasswordForm], orders: List[BookOrder])
 
 @main("Account - Bookstore") {
+    @header(account.getName + ' ' + account.getSurname, "Account page")
     <div class="container">
-        <div class="row">
-            <div class="col-md-10">
-                <h1>@account.getName @account.getSurname</h1>
+        <div class="row centered">
+            <div class="col-lg-8 col-lg-offset-2">
                 <h2>Settings:</h2>
 
                 @helper.form(action = helper.CSRF(routes.AccountController.changeName)) {
@@ -60,19 +60,19 @@
                     </form>
                 }
                 @if(session.get("accountType") != AccountType.ADMIN.toString) {
-                    <table>
+                    <table class="table">
                         <caption><h1>Orders</h1></caption>
                         <thead>
-                            <tr>
-                                <td>Order</td>
-                                <td>Date</td>
-                                <td>Status</td>
+                            <tr class="bg-info">
+                                <td scope="col">Order</td>
+                                <td scope="col">Date</td>
+                                <td scope="col">Status</td>
                             </tr>
                         </thead>
                         <tbody>
                         @for(o <- orders) {
                             <tr>
-                                <td><a href="@routes.OrderController.display(o.getId)">@o.getId</a></td>
+                                <td><a href="@routes.OrderController.display(o.getId)">#@o.getId</a></td>
                                 <td>@o.getDate</td>
                                 <td>@o.getStatus</td>
                             </tr>

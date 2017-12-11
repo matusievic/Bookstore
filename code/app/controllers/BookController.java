@@ -22,6 +22,8 @@ public class BookController extends Controller {
     @Inject
     private FormFactory formFactory;
     private static final int BOOK_PER_PAGE = 10;
+    @Inject
+    private Application applicationController;
 
     public Result update(int id) {
         String previousPage = request().getHeaders().get("referer").orElse("/");
@@ -45,22 +47,7 @@ public class BookController extends Controller {
         book.setDescription(bookForm.get().getDescription());
         bookService.updateBook(book);
 
-        List<Book> books = bookService.getBooks();
-
-        CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
-        List<Category> categories = categoryService.getCategories();
-
-        AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
-        List<Author> authors = authorService.getAuthors();
-
-        Pagination<Book> pagination = new Pagination<>();
-        pagination.setData(books);
-        pagination.setCurrentPage(0);
-        pagination.setItemPerPage(BOOK_PER_PAGE);
-
-        books = Paginator.paginate(pagination);
-
-        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount(), -1, -1));
+        return applicationController.catalog(-1, -1, 1);
     }
 
     private boolean isAccountHasAccess() {
@@ -76,22 +63,7 @@ public class BookController extends Controller {
         Book book = bookService.get(id);
         bookService.deleteBook(book);
 
-        List<Book> books = bookService.getBooks();
-
-        CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
-        List<Category> categories = categoryService.getCategories();
-
-        AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
-        List<Author> authors = authorService.getAuthors();
-
-        Pagination<Book> pagination = new Pagination<>();
-        pagination.setData(books);
-        pagination.setCurrentPage(1);
-        pagination.setItemPerPage(BOOK_PER_PAGE);
-
-        books = Paginator.paginate(pagination);
-
-        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount(), -1, -1));
+        return applicationController.catalog(-1, -1, 1);
     }
 
     public Result edit(int id) {
@@ -131,7 +103,7 @@ public class BookController extends Controller {
         }
         books = books.subList((currentPage - 1) * BOOK_PER_PAGE, currentPage * BOOK_PER_PAGE);
 
-        return ok(views.html.book.books.render(books, categories, authors, currentPage, totalPage, -1, -1));
+        return applicationController.catalog(-1, -1, currentPage);
 
     }
 
@@ -167,22 +139,7 @@ public class BookController extends Controller {
 
         bookService.add(name, imageURL, authorId, categoryId, price, pageCount, description);
 
-        List<Book> books = bookService.getBooks();
-
-        CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
-        List<Category> categories = categoryService.getCategories();
-
-        AuthorService authorService = ServiceFactory.getInstance().getAuthorService();
-        List<Author> authors = authorService.getAuthors();
-
-        Pagination<Book> pagination = new Pagination<>();
-        pagination.setData(books);
-        pagination.setCurrentPage(1);
-        pagination.setItemPerPage(BOOK_PER_PAGE);
-
-        books = Paginator.paginate(pagination);
-
-        return ok(views.html.book.books.render(books, categories, authors, pagination.getCurrentPage(), pagination.getPageCount(), -1, -1));
+        return applicationController.catalog(-1, -1, 1);
     }
 
     public Result get(int id) {

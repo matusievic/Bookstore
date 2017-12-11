@@ -3,22 +3,29 @@
 @(form: Form[Category])
 
 @main("Create category - Bookstore") {
-    @helper.form(action = helper.CSRF(routes.CategoryController.save())) {
-        <form class="form-group">
-            <h2 class="text-center">Edit category</h2>
-            <br>
-            @if(form.hasGlobalErrors) {
-                <p class="error">
-                @form.getGlobalError.get.message
-                </p>
+    @header("New category")
+    <div class="container">
+        <div class="row centered">
+            <div class="col-lg-8 col-lg-offset-2">
+            @helper.form(action = helper.CSRF(routes.CategoryController.save())) {
+                <form class="form-group">
+                    <h2 class="text-center">Edit category</h2>
+                    <br>
+                    @if(form.hasGlobalErrors) {
+                        <p class="error">
+                        @form.getGlobalError.get.message
+                        </p>
+                    }
+
+                    <label for="inputName" class="sr-only">Category name</label>
+                    <input type="text" name="name" id="inputName" class="form-control" placeholder="Category name" required autofocus>
+                    <br>
+
+                    <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
+
+                </form>
             }
-
-            <label for="inputName" class="sr-only">Category name</label>
-            <input type="text" name="name" id="inputName" class="form-control" placeholder="Category name" required autofocus>
-            <br>
-
-            <button class="btn btn-lg btn-success btn-block" type="submit">Save</button>
-
-        </form>
-    }
+            </div>
+        </div>
+    </div>
 }

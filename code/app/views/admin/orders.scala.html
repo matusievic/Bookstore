@@ -4,24 +4,30 @@
 @(orders: List[BookOrder], accounts: List[Account])
 
 @main("Orders - Bookstore") {
-    <table>
-        <tr>
-            <td>Id</td>
-            <td>User</td>
-            <td>Date</td>
-            <td>Status</td>
-            <td>More</td>
-        </tr>
-        @for(o <- orders) {
-            <tr>
-                <td><a href="@routes.OrderController.edit(o.getId)">Id</a></td>
-                <td>@{
-                    val a = accounts.find(a => a.getEmail == o.getAccountId)
-                    if(a.isDefined) a.get.getEmail else "Unknown user"
-                }</td>
-                <td>@o.getDate</td>
-                <td>@o.getStatus</td>
-            </tr>
-        }
-    </table>
+    @header("Orders")
+    <div class="container">
+        <div class="row centered">
+            <div class="col-lg-8 col-lg-offset-2">
+                <table class="table">
+                    <tr class="bg-info">
+                        <td>Id</td>
+                        <td>User</td>
+                        <td>Date</td>
+                        <td>Status</td>
+                    </tr>
+                    @for(o <- orders) {
+                        <tr>
+                            <td><a href="@routes.OrderController.edit(o.getId)">#@o.getId</a></td>
+                            <td>@{
+                                val a = accounts.find(a => a.getEmail == o.getAccountId)
+                                if(a.isDefined) a.get.getEmail else "Unknown user"
+                            }</td>
+                            <td>@o.getDate</td>
+                            <td>@o.getStatus</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
 }
