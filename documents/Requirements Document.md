@@ -1,4 +1,4 @@
-# Requirements Document
+﻿# Requirements Document
 ## 1 Introduction
 This is a simple bookstore web application. Is not a large application. It can be a suitable solution for small publishing offices, which are specialized on some particular narrow-focused literature. For example, a publishing house can sell its own products through this application because of it’s too expensive to have own shop and other shops can sell products with a large commission. Using this web application, customers can buy books for lower price than in any other shop. They can buy books from any place in any time.
 A customer can order a book through the application and get it directly from a publisher. A customer will not pay for a book in web application. Cash on delivery.
@@ -73,8 +73,7 @@ When quantity is growing, the application performance have to grow too. It may r
 #### Registered user can:
 - View books in the catalog
 - View detailed information about some particular book: title, description, price, rating
-- Search through book catalog
-- Rate a book
+
 - Order a book
 - View account information
 - Edit account information
