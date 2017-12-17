@@ -4,8 +4,8 @@
 
 ## Use-case testing
 
-Id  | Title | Scenario | Expected Result
---|--|--|--
+Id  | Title | Scenario | Expected Result | Actual Result | Pass/Fail indication
+ --|--|--|--|--|--
 Functional requirements
 #1U | View books in the catalog checking | Catalog link clicked. | Books are displaying.
 #2U | View book possibility checking | Catalog link clicked. After it, Learn more link clicked. | Detailed book information is displaying.
@@ -26,8 +26,8 @@ Non functional requirements | | |
 
 ## Presentation layer testing
 
-Id  | Title | Scenario | Expected result
---|--|--|--
+Id  | Title | Scenario | Expected Result | Actual Result | Pass/Fail indication
+ --|--|--|--|--|--
 #1P | Broken links checking | Browse website. Click links. | All links point to valid pages
 #2P | Paginations checking | Browse website. Select different pages using pagination. | Valid pages are loading
 #3P | Accordion ckecking at help page | Go to help page. Open and close each accordion help item | Each accordion item corresponds to its description
@@ -35,8 +35,8 @@ Id  | Title | Scenario | Expected result
 
 ## Business layer testing
 
-Id  | Title | Scenario | Expected result
---|--|--|--
+Id  | Title | Scenario | Expected Result | Actual Result | Pass/Fail indication
+ --|--|--|--|--|--
 #1B | Catalog item and its book page linking testing | Go to catalog page. Select a book. Click "Lean more.." link. | Corresponding book page is displaying
 #2B | Cart addition checking | Go to book catalog. Select a book. Click "Add to cart" button. | The book has successfully added to the cart
 #3B | Cart calculation checking | Go to catalog. Add few books to the cart. Go to cart page. | "Total price" field value corresponds to the sum of all books in the cart
