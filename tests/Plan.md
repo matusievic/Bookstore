@@ -14,7 +14,7 @@ For the application testing we're using system approach. It means that we're che
 
 ## Use-case testing
 
-Id  | Title | Scenario | Expected result
+Id  | Title | Scenario | Expected Result
 --|--|--|--
 Functional requirements
 #1U | View books in the catalog checking | Catalog link clicked | Books are displaying
