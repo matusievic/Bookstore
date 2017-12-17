@@ -41,9 +41,8 @@ Id  | Title | Scenario | Expected result
 --|--|--|--
 #1P | Broken links checking | Browse website. Click links. | All links point to valid pages
 #2P | Paginations checking | Browse website. Select different pages using pagination. | Valid pages are loading
-#3P | Sign up possibility checking | Sign up link clicked. Correct registration information was provided. Sign up button was clicked | Main page is displaying. Some additional menu items for a registered user is displaying.
-#4P | Accordion ckecking at help page | Go to help page. Open and close each accordion help item | Each accordion item corresponds to its description
-#5P | Main page slider checking | Go to main page. Try to flipping through slider items | Flipping is working
+#3P | Accordion ckecking at help page | Go to help page. Open and close each accordion help item | Each accordion item corresponds to its description
+#4P | Main page slider checking | Go to main page. Try to flipping through slider items | Flipping is working
 
 ## Business layer testing
 
