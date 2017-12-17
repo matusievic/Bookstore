@@ -3,8 +3,8 @@
 
 ## Use-case testing
 
-Id  | Title | Scenario | Expected result
---|--|--|--
+Id  | Title | Scenario | Expected Result | Actual Result | Pass/Fail indication
+--|--|--|--|--|--
 Functional requirements
 #1U | View books in the catalog checking | Catalog link clicked | Books are displaying
 #2U | View book possibility checking | Catalog link clicked. After it, Learn more link clicked | Detailed book information is displaying
