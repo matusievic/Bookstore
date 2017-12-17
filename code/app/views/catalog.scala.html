@@ -37,8 +37,8 @@
                     a.getName + " " + a.getSurname
                 }</a>
                 </li>
-            </ul>
             }
+            </ul>
             @if(session().get("accountType") == AccountType.ADMIN.toString) {
                 <a class="btn btn-success" href="@routes.AuthorController.authors">Edit authors</a>
             }
